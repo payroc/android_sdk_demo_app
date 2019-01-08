@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_manual"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Manual Pay" />
+        <item
+            android:id="@+id/nav_emv"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="EMV / Contactless" />
+        <item
+            android:id="@+id/nav_devices"
+            android:icon="@android:drawable/stat_sys_data_bluetooth"
+            android:title="Devices" />
+    </group>
+
+    <item android:title="Extras">
+        <menu>
+            <item
+                android:id="@+id/nav_tools"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Tools" />
+        </menu>
+    </item>
+
+</menu>
