@@ -39,8 +39,11 @@ class DeviceListFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_devicelist_list, container, false)
 
-
         // TODO - create an array adapter for the bluetooth results.
+        // TODO - get the appropriate stuff here.
+//        var arrayAdapter = PayrocSdk().findDevice {
+//            PLog.i(TAG, "It looks like it worked $it")
+//        }
 
         // Set the adapter
         if (view is RecyclerView) {
@@ -86,7 +89,7 @@ class DeviceListFragment : Fragment() {
     }
 
     companion object {
-
+        const val TAG = "DeviceListFragment"
         // TODO: Customize parameter argument names
         const val ARG_COLUMN_COUNT = "column-count"
 

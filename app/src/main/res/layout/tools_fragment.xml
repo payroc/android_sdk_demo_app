@@ -8,14 +8,27 @@
         android:layout_height="match_parent"
         tools:context=".ui.tools.ToolsFragment">
 
-    <TextView
-            android:id="@+id/message"
-            android:layout_width="wrap_content"
+    <Button
+            android:text="@string/email_support"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="ToolsFragment"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/toolsEmailSupport"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"/>
+
+    <Button
+            android:text="@string/call_support"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/toolsCallSupport"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintTop_toBottomOf="@+id/toolsEmailSupport"/>
 
 </android.support.constraint.ConstraintLayout>
