@@ -73,6 +73,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 intent.putExtra("mode", TransactionModes.EMV.name)
                 startActivityForResult(intent, ActivityResultTypes.CREATE_TRANSACTION.ordinal)
             }
+            R.id.nav_multi_line -> {
+                val intent = Intent(this, TransactionActivity::class.java)
+                intent.putExtra("mode", TransactionModes.MULTI_LINE.name)
+                startActivityForResult(intent, ActivityResultTypes.CREATE_TRANSACTION.ordinal)
+            }
+            R.id.nav_ingest -> {
+                val intent = Intent(this, TransactionActivity::class.java)
+                intent.putExtra("mode", TransactionModes.INGEST.name)
+                startActivityForResult(intent, ActivityResultTypes.CREATE_TRANSACTION.ordinal)
+            }
             R.id.nav_devices -> {
                 val intent = Intent(this, DevicesActivity::class.java)
                 startActivityForResult(intent, ActivityResultTypes.FIND_DEVICE.ordinal)
@@ -81,6 +91,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val intent = Intent(this, ToolsActivity::class.java)
                 startActivity(intent)
             }
+
+            // TODO - add card ingest and multi line transaction types.
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
