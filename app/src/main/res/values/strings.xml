@@ -37,4 +37,16 @@
     <string name="testExpDate">12/20</string>
     <string name="testCvv">123</string>
     <string name="testPostal">84041</string>
+    <string name="paired_devices">Paired Devices</string>
+    <string name="no_devices_found">No devices found</string>
+    <string name="available_devices">Available Devices</string>
+    <string name="pair_new_device">Pair new device</string>
+    <string name="pair_new_device_action">+ Pair New Device</string>
+    <string name="no_bonded_devices_found">No bonded devices found</string>
+    <string name="shared_prefs_key">DEMO_APP_SHARED_PREFS</string>
+    <string name="not_found">Not found</string>
+    <string name="device_status">Device Status</string>
+    <string name="shared_prefs_device_name_key">active_device_name</string>
+    <string name="shared_prefs_device_address_key">active_device_address</string>
+    <string name="shared_prefs_device_type_key">active_device_type</string>
 </resources>

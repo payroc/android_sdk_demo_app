@@ -30,10 +30,9 @@
             android:id="@+id/submitEmvTxn"
             app:layout_constraintTop_toBottomOf="@+id/txnAmountEmv"
             app:layout_constraintStart_toStartOf="@+id/txnAmountEmv"
-            app:layout_constraintEnd_toEndOf="@+id/txnAmountEmv"
-    />
+            app:layout_constraintEnd_toEndOf="@+id/txnAmountEmv"/>
     <TextView
-            android:text="Device Status"
+            android:text="@string/device_status"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="@+id/submitEmvTxn"
@@ -41,11 +40,14 @@
             app:layout_constraintTop_toBottomOf="@+id/submitEmvTxn"
             app:layout_constraintEnd_toEndOf="@+id/submitEmvTxn"/>
     <TextView
-            android:text="Not found"
+            android:text="@string/not_found"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="@+id/statusTitle"
-            android:id="@+id/deviceStatusTextView" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/statusTitle" app:layout_constraintEnd_toEndOf="@+id/statusTitle"
-            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
+            android:id="@+id/deviceStatusTextView"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/statusTitle"
+            app:layout_constraintEnd_toEndOf="@+id/statusTitle"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 </android.support.constraint.ConstraintLayout>

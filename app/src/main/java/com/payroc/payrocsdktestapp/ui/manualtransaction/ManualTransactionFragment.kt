@@ -1,5 +1,6 @@
 package com.payroc.payrocsdktestapp.ui.manualtransaction
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import com.payroc.payrocsdktestapp.BuildConfig
 import com.payroc.payrocsdktestapp.R
 import com.payroc.sdk.PLog
@@ -35,7 +37,7 @@ class ManualTransactionFragment : Fragment() {
 	private lateinit var cvNum: EditText
 	private lateinit var postal: EditText
 	private lateinit var submit: AppCompatButton
-	private lateinit var resultBody: TextView
+	private lateinit var txnResult: TextView
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 		val view = inflater.inflate(R.layout.manual_transaction_fragment, container, false)
@@ -47,7 +49,7 @@ class ManualTransactionFragment : Fragment() {
 		cvNum = subLayout.findViewById(R.id.cvvNum)
 		postal = subLayout.findViewById(R.id.postal)
 		submit = subLayout.findViewById(R.id.submitManualTxn)
-		resultBody = subLayout.findViewById(R.id.manualResultBody)
+		txnResult = subLayout.findViewById(R.id.manualResultBody)
 
 		// TODO - remove this once we are ready to go live.
 		// Pre-fill test params - because I am lazy.
@@ -72,6 +74,11 @@ class ManualTransactionFragment : Fragment() {
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)
 		viewModel = ViewModelProviders.of(this).get(ManualTransactionViewModel::class.java)
+
+		viewModel.txnResult.observe(this, Observer<String> { status ->
+			txnResult.text = status
+		})
+
 	}
 
 	private fun createLineItems(){
@@ -95,13 +102,12 @@ class ManualTransactionFragment : Fragment() {
 		PLog.i(TAG, "Starting Transaction\n${transaction.toHashMap(Gateways.IBX)}", null, BuildConfig.DEBUG)
 
 		// TODO - consider passing a simple message and the response object as well.
+		// TODO - figure out why this won't update the UI
 		viewModel.payrocSdk.startManualTransaction(transaction) { success, msg ->
+			Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
 			PLog.i(TAG, "Transaction was successful $success \nPayload returned $msg", null, BuildConfig.DEBUG)
 			// Do something with the response for records
-			activity!!.runOnUiThread {
-				resultBody.text = msg
-				// TODO - figure out why it isn't updating the UI thread.
-			}
+			viewModel.txnResult.value = msg
 		}
 	}
 

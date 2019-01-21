@@ -20,5 +20,10 @@ class ManualTransactionViewModel : ViewModel() {
         return paymentResult
     }
 
+    val txnResult: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
+
+
     // TODO - make this view model a shared one
 }

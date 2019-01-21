@@ -17,17 +17,10 @@ class DevicesActivity : AppCompatActivity(), DeviceListFragment.OnListFragmentIn
 
         supportActionBar!!.title = "Select Device"
 
-//        setContentView(R.layout.devices_activity)
-//        if (savedInstanceState == null) {
-//            supportFragmentManager.beginTransaction()
-//                .replace(R.id.container, DevicesFragment.newInstance())
-//                .commitNow()
-//        }
-
         setContentView(R.layout.devices_activity)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, DeviceListFragment.newInstance(1))
+                .replace(R.id.container, DevicesFragment.newInstance())
                 .commitNow()
         }
     }

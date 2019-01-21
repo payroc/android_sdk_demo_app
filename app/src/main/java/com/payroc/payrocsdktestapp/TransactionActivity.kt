@@ -1,12 +1,11 @@
 package com.payroc.payrocsdktestapp
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import com.payroc.payrocsdktestapp.ui.emvtransaction.EmvTransactionFragment
 import com.payroc.payrocsdktestapp.ui.manualtransaction.ManualTransactionFragment
 import com.payroc.payrocsdktestapp.ui.multilinetransaction.MultiLineTransactionFragment
 import com.payroc.sdk.PLog
-import com.payroc.sdk.views.ui.transaction.CardIngest
 
 
 class TransactionActivity : AppCompatActivity() {
