@@ -83,9 +83,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 intent.putExtra("mode", TransactionModes.INGEST.name)
                 startActivityForResult(intent, ActivityResultTypes.CREATE_TRANSACTION.ordinal)
             }
+            R.id.nav_inventory -> {
+                val intent = Intent(this, TransactionActivity::class.java)
+                intent.putExtra("mode", TransactionModes.INVENTORY.name)
+                startActivityForResult(intent, ActivityResultTypes.CREATE_TRANSACTION.ordinal)
+            }
             R.id.nav_devices -> {
                 val intent = Intent(this, DevicesActivity::class.java)
                 startActivityForResult(intent, ActivityResultTypes.FIND_DEVICE.ordinal)
+            }
+            R.id.nav_history -> {
+                val intent = Intent(this, HistoryActivity::class.java)
+                startActivityForResult(intent, ActivityResultTypes.GET_HISTORY.ordinal)
             }
             R.id.nav_tools -> {
                 val intent = Intent(this, ToolsActivity::class.java)

@@ -2,13 +2,17 @@ package com.payroc.payrocsdktestapp.ui.manualtransaction
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.AppCompatButton
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -17,6 +21,7 @@ import com.payroc.payrocsdktestapp.R
 import com.payroc.sdk.PLog
 import com.payroc.sdk.enums.Environment
 import com.payroc.sdk.enums.Gateways
+import com.payroc.sdk.models.DefaultStyling
 import com.payroc.sdk.models.LineItem
 import com.payroc.sdk.models.Transaction
 import com.payroc.sdk.models.pos.PaymentDeviceManual
@@ -31,6 +36,7 @@ class ManualTransactionFragment : Fragment() {
 
 	private var lineItems: ArrayList<LineItem> = arrayListOf()
 	private lateinit var viewModel: ManualTransactionViewModel
+	private lateinit var prefs: SharedPreferences
 	private lateinit var amount: EditText
 	private lateinit var cardNumber: EditText
 	private lateinit var expDate: EditText
@@ -62,7 +68,15 @@ class ManualTransactionFragment : Fragment() {
 		}
 
 		submit.setOnClickListener{
-			startTransaction()
+			if (amount.text.isNotBlank()){
+				startTransaction()
+			} else {
+				Snackbar.make(view, "Amount cannot be empty", Snackbar.LENGTH_LONG).setAction("Fix") {
+					amount.requestFocus()
+					val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+					imm!!.showSoftInput(amount, InputMethodManager.SHOW_IMPLICIT)
+				}.show()
+			}
 		}
 
 		// TODO - implement listeners on text change that have full validations on each field.
@@ -74,10 +88,19 @@ class ManualTransactionFragment : Fragment() {
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)
 		viewModel = ViewModelProviders.of(this).get(ManualTransactionViewModel::class.java)
+		prefs = activity!!.getSharedPreferences(getString(R.string.shared_prefs_key), Context.MODE_PRIVATE)!!
 
 		viewModel.txnResult.observe(this, Observer<String> { status ->
 			txnResult.text = status
 		})
+
+		viewModel.payrocSdk.setGateway(
+			prefs.getString(getString(R.string.shared_prefs_api_username_key), "")!!,
+			prefs.getString(getString(R.string.shared_prefs_api_password_key), "")!!,
+			Gateways.values()[prefs.getInt(getString(R.string.shared_prefs_api_gateway_key), 0)],
+			Environment.values()[prefs.getInt(getString(R.string.shared_prefs_api_environment_key), 0)],
+			DefaultStyling()
+		)
 
 	}
 
@@ -88,8 +111,6 @@ class ManualTransactionFragment : Fragment() {
 	}
 
 	private fun startTransaction() {
-		// Normally initialized elsewhere.
-		viewModel.payrocSdk.setGateway("payr9197","Sandbox1", Gateways.IBX, Environment.Stage)
 		createLineItems()
 
 		// Some rudimentary checks - should provide validators internally

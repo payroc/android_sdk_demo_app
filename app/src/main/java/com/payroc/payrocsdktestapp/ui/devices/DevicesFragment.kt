@@ -61,11 +61,11 @@ class DevicesFragment : Fragment() {
         }
 
         if (deviceArrayList.count() == 0){
-            deviceArrayList.add(getString(R.string.no_bonded_devices_found))
+            deviceArrayList.add(getString(R.string.bt_no_bonded_devices_found))
         }
 
         // TODO - find a different way to insert a button or other data
-        deviceArrayList.add(getString(R.string.pair_new_device_action))
+        deviceArrayList.add(getString(R.string.bt_pair_new_device_action))
         // TODO - add unpaired to the list if they don't exist already.
 
         pairedDeviceListView.adapter = ArrayAdapter<String>(context!!, R.layout.device_name, deviceArrayList)
@@ -78,32 +78,26 @@ class DevicesFragment : Fragment() {
             val name = info.substringBefore("\n")
 
             when (name) {
-                getString(R.string.pair_new_device_action) -> {
+                getString(R.string.bt_pair_new_device_action) -> {
                     val ft = fragmentManager!!.beginTransaction()
                     ft.replace(R.id.container, FindDevicesFragment(), "FindDevicesFragmentTag")
                     ft.addToBackStack("find_devices")
                     ft.commit()
                 }
-                getString(R.string.no_bonded_devices_found) -> {
+                getString(R.string.bt_no_bonded_devices_found) -> {
                     // TODO - make sure this button is not clickable
                     Toast.makeText(context!!, "Disable this button dynamically", Toast.LENGTH_LONG).show()
                 }
                 else -> {
                     Toast.makeText(context!!, "Bluetooth Device Tapped $name", Toast.LENGTH_LONG).show()
 
-                    // TODO - check which
-
                     val sp = activity!!.getSharedPreferences(getString(R.string.shared_prefs_key), Context.MODE_PRIVATE)
                     sp.edit().putString(getString(R.string.shared_prefs_device_name_key), name).apply()
                     sp.edit().putString(getString(R.string.shared_prefs_device_address_key), address).apply()
-                    sp.edit().putString(getString(R.string.shared_prefs_device_type_key), "Simcent").apply() // TODO - eventually I want to get this so later we can get the right stuff.
+                    sp.edit().putString(getString(R.string.shared_prefs_device_type_key), "Simcent").apply() // TODO - eventually I want to get this so later we can get the right stuff based on the device.
 
-                    // TODO - should we do this with an intent or just save it locally?
-//                    val intent = Intent()
-//                    intent.putExtra(getString(R.string.shared_prefs_device_name_key), name)
-//                    intent.putExtra(getString(R.string.shared_prefs_device_address_key), address)
-//                    activity!!.setResult(Activity.RESULT_OK, intent)
-//                    activity!!.finish()
+                    activity!!.setResult(Activity.RESULT_OK, Intent())
+                    activity!!.finish()
                 }
             }
         }

@@ -72,7 +72,7 @@ class FindDevicesFragment : Fragment() {
         }
 
         if (deviceArrayList.count() == 0){
-            deviceArrayList.add(getString(R.string.no_bonded_devices_found))
+            deviceArrayList.add(getString(R.string.bt_no_bonded_devices_found))
         }
 
         unpairedDeviceListView.adapter = ArrayAdapter<String>(context!!, R.layout.device_name, deviceArrayList)
@@ -82,7 +82,7 @@ class FindDevicesFragment : Fragment() {
             val name = info.substringBefore("\n")
 
             when (name) {
-                getString(R.string.no_bonded_devices_found) -> {
+                getString(R.string.bt_no_bonded_devices_found) -> {
                     Toast.makeText(context!!, "Disable this button dynamically", Toast.LENGTH_LONG).show()
                 }
                 else -> {

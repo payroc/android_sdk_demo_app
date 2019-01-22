@@ -4,5 +4,6 @@ enum class TransactionModes {
     EMV,
     MANUAL,
     INGEST,
-    MULTI_LINE
+    MULTI_LINE,
+    INVENTORY
 }

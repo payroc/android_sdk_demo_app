@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:autofillHints=""/>
     <Button
-            android:text="@string/button_pay"
+            android:text="@string/txn_button_pay"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/submitEmvTxn"
@@ -32,7 +32,7 @@
             app:layout_constraintStart_toStartOf="@+id/txnAmountEmv"
             app:layout_constraintEnd_toEndOf="@+id/txnAmountEmv"/>
     <TextView
-            android:text="@string/device_status"
+            android:text="@string/bt_device_status"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="@+id/submitEmvTxn"
