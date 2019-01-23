@@ -70,12 +70,15 @@ class EmvTransactionFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(EmvTransactionViewModel::class.java)
 
+        val gatewayPos = prefs.getInt(getString(R.string.shared_prefs_api_gateway_key), 0)
+        val envPos = prefs.getInt(getString(R.string.shared_prefs_api_environment_key), 0)
+
         prefs = activity!!.getSharedPreferences(getString(R.string.shared_prefs_key), Context.MODE_PRIVATE)!!
         viewModel.payrocSdk.setGateway(
             prefs.getString(getString(R.string.shared_prefs_api_username_key), "")!!,
             prefs.getString(getString(R.string.shared_prefs_api_password_key), "")!!,
-            Gateways.values()[prefs.getInt(getString(R.string.shared_prefs_api_gateway_key), 0)],
-            Environment.values()[prefs.getInt(getString(R.string.shared_prefs_api_environment_key), 0)],
+            Gateways.values()[gatewayPos],
+            Environment.values()[envPos],
             DefaultStyling()
         )
 

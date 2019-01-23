@@ -6,13 +6,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.AppCompatButton
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -25,6 +23,7 @@ import com.payroc.sdk.models.DefaultStyling
 import com.payroc.sdk.models.LineItem
 import com.payroc.sdk.models.Transaction
 import com.payroc.sdk.models.pos.PaymentDeviceManual
+import com.payroc.sdk.models.validators.*
 import java.math.BigDecimal
 
 class ManualTransactionFragment : Fragment() {
@@ -35,6 +34,8 @@ class ManualTransactionFragment : Fragment() {
 	}
 
 	private var lineItems: ArrayList<LineItem> = arrayListOf()
+	private var cancelTransaction: Boolean = false
+	private var focusView: View? = null
 	private lateinit var viewModel: ManualTransactionViewModel
 	private lateinit var prefs: SharedPreferences
 	private lateinit var amount: EditText
@@ -44,6 +45,7 @@ class ManualTransactionFragment : Fragment() {
 	private lateinit var postal: EditText
 	private lateinit var submit: AppCompatButton
 	private lateinit var txnResult: TextView
+
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 		val view = inflater.inflate(R.layout.manual_transaction_fragment, container, false)
@@ -67,22 +69,12 @@ class ManualTransactionFragment : Fragment() {
 			postal.setText(getString(R.string.testPostal))
 		}
 
+		// TODO - implement listeners on text change that have full validations on each field.
 		submit.setOnClickListener{
-			if (amount.text.isNotBlank()){
-				startTransaction()
-			} else {
-				Snackbar.make(view, "Amount cannot be empty", Snackbar.LENGTH_LONG).setAction("Fix") {
-					amount.requestFocus()
-					val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-					imm!!.showSoftInput(amount, InputMethodManager.SHOW_IMPLICIT)
-				}.show()
-			}
+			isFormContentValid()
 		}
 
-		// TODO - implement listeners on text change that have full validations on each field.
-
 		return view
-
 	}
 
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -94,6 +86,9 @@ class ManualTransactionFragment : Fragment() {
 			txnResult.text = status
 		})
 
+		val gatewayPos = prefs.getInt(getString(R.string.shared_prefs_api_gateway_key), 0)
+		val envPos = prefs.getInt(getString(R.string.shared_prefs_api_environment_key), 0)
+
 		viewModel.payrocSdk.setGateway(
 			prefs.getString(getString(R.string.shared_prefs_api_username_key), "")!!,
 			prefs.getString(getString(R.string.shared_prefs_api_password_key), "")!!,
@@ -101,6 +96,8 @@ class ManualTransactionFragment : Fragment() {
 			Environment.values()[prefs.getInt(getString(R.string.shared_prefs_api_environment_key), 0)],
 			DefaultStyling()
 		)
+
+		viewModel.payrocSdk.setPaymentDevice(PaymentDeviceManual())
 
 	}
 
@@ -110,8 +107,44 @@ class ManualTransactionFragment : Fragment() {
 		lineItems.add(lineItem)
 	}
 
+	private fun isFormContentValid(){
+		// Reset Validation
+		amount.error = null
+		cardNumber.error = null
+		expDate.error = null
+		cvNum.error = null
+		postal.error = null
+		focusView = null
+		cancelTransaction = false
+
+		val amountStr = amount.text.toString()
+		val cardNumberStr = cardNumber.text.toString()
+		val expDateStr = expDate.text.toString()
+		val cvNumStr = cvNum.text.toString()
+		val postalStr = postal.text.toString()
+
+		if (!TxnAmount().isValid(amountStr)) setErrorOnInput(amount, getString(R.string.error_invalid_amount))
+		if (!CardNumber().isValid(cardNumberStr)) setErrorOnInput(cardNumber, getString(R.string.error_invalid_card_number))
+		if (!TxnExpDate().isValid(expDateStr)) setErrorOnInput(expDate, getString(R.string.error_invalid_exp_date))
+		if (!TxnCvNum().isValid(cvNumStr)) setErrorOnInput(cvNum, getString(R.string.error_invalid_cv_num))
+		if (!Postal().isValid(postalStr)) setErrorOnInput(postal, getString(R.string.error_invalid_postal))
+
+		if (cancelTransaction) {
+			focusView?.requestFocus()
+		} else {
+			startTransaction()
+		}
+	}
+
+	private fun setErrorOnInput(editText: EditText, error:String){
+		editText.error = error
+		focusView = amount
+		cancelTransaction = true
+	}
+
 	private fun startTransaction() {
 		createLineItems()
+		//			activity!!.showProgress(true)
 
 		// Some rudimentary checks - should provide validators internally
 		val transaction = Transaction(lineItems, PaymentDeviceManual())
@@ -124,7 +157,7 @@ class ManualTransactionFragment : Fragment() {
 
 		// TODO - consider passing a simple message and the response object as well.
 		// TODO - figure out why this won't update the UI
-		viewModel.payrocSdk.startManualTransaction(transaction) { success, msg ->
+		viewModel.payrocSdk.startTransaction(transaction) { success, msg ->
 			Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
 			PLog.i(TAG, "Transaction was successful $success \nPayload returned $msg", null, BuildConfig.DEBUG)
 			// Do something with the response for records

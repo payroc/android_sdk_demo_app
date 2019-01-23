@@ -8,7 +8,8 @@ import com.payroc.payrocsdktestapp.ui.inventory.InventoryFragment
 import com.payroc.payrocsdktestapp.ui.manualtransaction.ManualTransactionFragment
 import com.payroc.payrocsdktestapp.ui.multilinetransaction.MultiLineTransactionFragment
 import com.payroc.sdk.PLog
-import com.payroc.sdk.views.ui.transaction.CardIngestFragment
+import com.payroc.sdk.enums.TransactionModes
+import com.payroc.sdk.ui.transaction.CardIngestFragment
 
 
 class TransactionActivity : AppCompatActivity() {

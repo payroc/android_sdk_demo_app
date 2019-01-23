@@ -62,10 +62,10 @@ class SettingsFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(SettingsViewModel::class.java)
         prefs = activity!!.getSharedPreferences(getString(R.string.shared_prefs_key), Context.MODE_PRIVATE)!!
 
-        setupFieldObserver(getString(R.string.shared_prefs_api_username_key), viewModel.apiUsername, apiUsername)
-        setupFieldObserver(getString(R.string.shared_prefs_api_password_key), viewModel.apiPassword, apiPassword)
-        setupFieldObserver(getString(R.string.shared_prefs_api_environment_key), viewModel.apiEnvironment, environmentSpinner)
-        setupFieldObserver(getString(R.string.shared_prefs_api_gateway_key), viewModel.apiGateway, gatewaySpinner)
+        setupFieldObserver(getString(com.payroc.sdk.R.string.shared_prefs_api_username_key), viewModel.apiUsername, apiUsername)
+        setupFieldObserver(getString(com.payroc.sdk.R.string.shared_prefs_api_password_key), viewModel.apiPassword, apiPassword)
+        setupFieldObserver(getString(com.payroc.sdk.R.string.shared_prefs_api_environment_key), viewModel.apiEnvironment, environmentSpinner)
+        setupFieldObserver(getString(com.payroc.sdk.R.string.shared_prefs_api_gateway_key), viewModel.apiGateway, gatewaySpinner)
     }
 
     private fun setupFieldObserver(prefKey: String, modelField: MutableLiveData<Int>, uiField: Spinner){
@@ -86,10 +86,10 @@ class SettingsFragment : Fragment() {
     }
 
     private fun updateCredentials(){
-        prefs.edit().putString(getString(R.string.shared_prefs_api_username_key), apiUsername.text.toString()).apply()
-        prefs.edit().putString(getString(R.string.shared_prefs_api_password_key), apiPassword.text.toString()).apply()
-        prefs.edit().putInt(getString(R.string.shared_prefs_api_environment_key), environmentSpinner.selectedItemPosition).apply()
-        prefs.edit().putInt(getString(R.string.shared_prefs_api_gateway_key), gatewaySpinner.selectedItemPosition).apply()
+        prefs.edit().putString(getString(com.payroc.sdk.R.string.shared_prefs_api_username_key), apiUsername.text.toString()).apply()
+        prefs.edit().putString(getString(com.payroc.sdk.R.string.shared_prefs_api_password_key), apiPassword.text.toString()).apply()
+        prefs.edit().putInt(getString(com.payroc.sdk.R.string.shared_prefs_api_environment_key), environmentSpinner.selectedItemPosition).apply()
+        prefs.edit().putInt(getString(com.payroc.sdk.R.string.shared_prefs_api_gateway_key), gatewaySpinner.selectedItemPosition).apply()
 
         val msg = "Settings updated"
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()

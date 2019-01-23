@@ -37,7 +37,7 @@
             android:importantForAutofill="no"
             app:layout_constraintTop_toBottomOf="@+id/apiUsername"/>
     <Spinner
-            android:layout_width="395dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/settingsGatewaySpinner" android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/apiPassword"

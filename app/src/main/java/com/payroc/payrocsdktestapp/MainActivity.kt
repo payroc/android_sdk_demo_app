@@ -9,6 +9,10 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.payroc.sdk.PayrocSdk
+import com.payroc.sdk.enums.ActivityResultTypes
+import com.payroc.sdk.enums.TransactionModes
+import com.payroc.sdk.ui.DevicesActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
@@ -89,8 +93,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivityForResult(intent, ActivityResultTypes.CREATE_TRANSACTION.ordinal)
             }
             R.id.nav_devices -> {
-                val intent = Intent(this, DevicesActivity::class.java)
-                startActivityForResult(intent, ActivityResultTypes.FIND_DEVICE.ordinal)
+                PayrocSdk().findDevice(this)
             }
             R.id.nav_history -> {
                 val intent = Intent(this, HistoryActivity::class.java)
