@@ -36,4 +36,5 @@
     <string name="api_password">Api Password</string>
 
     <string name="save">Save</string>
+    <string name="nuke_stored_settings">Nuke Stored Settings</string>
 </resources>

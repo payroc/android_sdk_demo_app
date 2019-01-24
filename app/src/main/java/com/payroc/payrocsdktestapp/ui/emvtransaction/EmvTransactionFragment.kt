@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.AppCompatButton
 import android.view.LayoutInflater
@@ -25,7 +24,7 @@ import com.payroc.sdk.models.Transaction
 import com.payroc.sdk.models.pos.PaymentDeviceManual
 import stringLiveData
 import java.math.BigDecimal
-import android.view.inputmethod.InputMethodManager
+import com.payroc.sdk.models.validators.TxnAmount
 
 
 class EmvTransactionFragment : Fragment() {
@@ -36,6 +35,8 @@ class EmvTransactionFragment : Fragment() {
     }
 
     private var lineItems: ArrayList<LineItem> = arrayListOf()
+    private var cancelTransaction: Boolean = false
+    private var focusView: View? = null
     private lateinit var viewModel: EmvTransactionViewModel
     private lateinit var prefs: SharedPreferences
     private lateinit var deviceStatus: TextView
@@ -51,16 +52,7 @@ class EmvTransactionFragment : Fragment() {
         amount = view.findViewById(R.id.txnAmountEmv)
         submit = view.findViewById(R.id.submitEmvTxn)
         submit.setOnClickListener{
-            if (amount.text.isNotBlank()){
-                startTransaction()
-            } else {
-                Snackbar.make(view, "Amount cannot be empty", Snackbar.LENGTH_LONG).setAction("Fix") {
-                    amount.requestFocus()
-                    val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-                    imm!!.showSoftInput(amount, InputMethodManager.SHOW_IMPLICIT)
-                }.show()
-            }
-
+            isFormContentValid()
         }
 
         return view
@@ -70,10 +62,10 @@ class EmvTransactionFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(EmvTransactionViewModel::class.java)
 
+        prefs = activity!!.getSharedPreferences(getString(R.string.shared_prefs_key), Context.MODE_PRIVATE)!!
         val gatewayPos = prefs.getInt(getString(R.string.shared_prefs_api_gateway_key), 0)
         val envPos = prefs.getInt(getString(R.string.shared_prefs_api_environment_key), 0)
 
-        prefs = activity!!.getSharedPreferences(getString(R.string.shared_prefs_key), Context.MODE_PRIVATE)!!
         viewModel.payrocSdk.setGateway(
             prefs.getString(getString(R.string.shared_prefs_api_username_key), "")!!,
             prefs.getString(getString(R.string.shared_prefs_api_password_key), "")!!,
@@ -107,11 +99,30 @@ class EmvTransactionFragment : Fragment() {
         lineItems.add(lineItem)
     }
 
+    private fun isFormContentValid(){
+        amount.error = null
+        val amountStr = amount.text.toString()
+
+        if (!TxnAmount().isValid(amountStr)) setErrorOnInput(amount, getString(R.string.error_invalid_amount))
+
+        if (cancelTransaction) {
+            focusView?.requestFocus()
+        } else {
+            startTransaction()
+        }
+    }
+
+    private fun setErrorOnInput(editText: EditText, error:String){
+        editText.error = error
+        focusView = amount
+        cancelTransaction = true
+    }
+
     private fun startTransaction(){
         createLineItems()
 
-        // Some rudimentary checks - should provide validators internally
         val transaction = Transaction(lineItems, PaymentDeviceManual())
+        transaction.taxPercent
 
         PLog.i(ManualTransactionFragment.TAG, "Starting Transaction\n${transaction.toHashMap(Gateways.IBX)}", null, BuildConfig.DEBUG)
 

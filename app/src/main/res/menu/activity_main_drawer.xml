@@ -40,6 +40,10 @@
                 android:id="@+id/nav_tools"
                 android:icon="@drawable/ic_menu_manage"
                 android:title="@string/tools" />
+            <item
+                    android:id="@+id/nav_nuke_data"
+                    android:icon="@drawable/ic_menu_manage"
+                    android:title="@string/nuke_stored_settings" />
         </menu>
     </item>
 

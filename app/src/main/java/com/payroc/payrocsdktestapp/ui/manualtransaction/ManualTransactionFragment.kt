@@ -144,9 +144,8 @@ class ManualTransactionFragment : Fragment() {
 
 	private fun startTransaction() {
 		createLineItems()
-		//			activity!!.showProgress(true)
+//			activity!!.showProgress(true)
 
-		// Some rudimentary checks - should provide validators internally
 		val transaction = Transaction(lineItems, PaymentDeviceManual())
 		transaction.cardData.cardNum = if (cardNumber.text.isNotEmpty()) cardNumber.text.toString() else "0"
 		transaction.cardData.expDate = if (expDate.text.isNotEmpty()) expDate.text.toString() else "0"

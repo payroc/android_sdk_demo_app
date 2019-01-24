@@ -1,6 +1,7 @@
 package com.payroc.payrocsdktestapp
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
@@ -9,10 +10,10 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.payroc.sdk.PLog
 import com.payroc.sdk.PayrocSdk
 import com.payroc.sdk.enums.ActivityResultTypes
 import com.payroc.sdk.enums.TransactionModes
-import com.payroc.sdk.ui.DevicesActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
@@ -103,8 +104,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val intent = Intent(this, ToolsActivity::class.java)
                 startActivity(intent)
             }
-
-            // TODO - add card ingest and multi line transaction types.
+            R.id.nav_nuke_data -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    PayrocSdk().nukeAllData(this)
+                } else {
+                    PLog.d("Main Activity", "SDK version of your device does not support this feature", null, BuildConfig.DEBUG)
+                }
+            }
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
