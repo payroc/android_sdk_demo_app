@@ -21,7 +21,7 @@ import com.payroc.sdk.enums.Gateways
 import com.payroc.sdk.models.DefaultStyling
 import com.payroc.sdk.models.LineItem
 import com.payroc.sdk.models.Transaction
-import com.payroc.sdk.models.pos.PaymentDeviceManual
+import com.payroc.sdk.models.pos.manual.PaymentDeviceManual
 import stringLiveData
 import java.math.BigDecimal
 import com.payroc.sdk.models.validators.TxnAmount
