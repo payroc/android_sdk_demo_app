@@ -104,12 +104,7 @@ class EmvTransactionFragment : Fragment() {
         val amountStr = amount.text.toString()
 
         if (!TxnAmount().isValid(amountStr)) setErrorOnInput(amount, getString(R.string.error_invalid_amount))
-
-        if (cancelTransaction) {
-            focusView?.requestFocus()
-        } else {
-            startTransaction()
-        }
+        if (cancelTransaction) focusView?.requestFocus() else startTransaction()
     }
 
     private fun setErrorOnInput(editText: EditText, error:String){
@@ -122,13 +117,14 @@ class EmvTransactionFragment : Fragment() {
         createLineItems()
 
         val transaction = Transaction(lineItems, PaymentDeviceManual())
-        transaction.taxPercent
+        // TODO - add tax percentages
+        // TODO - add tip functionality
 
         PLog.i(ManualTransactionFragment.TAG, "Starting Transaction\n${transaction.toHashMap(Gateways.IBX)}", null, BuildConfig.DEBUG)
 
         // TODO - consider passing a simple message and the response object as well.
         // TODO - figure out why this won't update the UI
-        viewModel.payrocSdk.startTransaction(transaction) { success, msg ->
+        viewModel.payrocSdk.startTransaction(context!!, transaction) { success, msg ->
             PLog.i(ManualTransactionFragment.TAG, "Transaction status: $success \nPayload returned: $msg", null, BuildConfig.DEBUG)
             viewModel.txnResult.value = msg
         }

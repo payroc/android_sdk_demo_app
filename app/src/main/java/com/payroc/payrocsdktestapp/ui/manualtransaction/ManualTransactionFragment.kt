@@ -156,7 +156,7 @@ class ManualTransactionFragment : Fragment() {
 
 		// TODO - consider passing a simple message and the response object as well.
 		// TODO - figure out why this won't update the UI
-		viewModel.payrocSdk.startTransaction(transaction) { success, msg ->
+		viewModel.payrocSdk.startTransaction(context!!, transaction) { success, msg ->
 			Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
 			PLog.i(TAG, "Transaction was successful $success \nPayload returned $msg", null, BuildConfig.DEBUG)
 			// Do something with the response for records
