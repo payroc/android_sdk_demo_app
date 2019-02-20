@@ -37,4 +37,5 @@
 
     <string name="save">Save</string>
     <string name="nuke_stored_settings">Nuke Stored Settings</string>
+    <string name="payment_processing">Payment Processing</string>
 </resources>

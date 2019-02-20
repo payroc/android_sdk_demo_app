@@ -1,31 +1,27 @@
 package com.payroc.payrocsdktestapp.ui.emvtransaction
 
-import android.arch.lifecycle.Observer
+import android.app.Activity.RESULT_CANCELED
+import android.app.Activity.RESULT_OK
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
-import android.content.SharedPreferences
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.preference.PreferenceManager
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.AppCompatButton
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.TextView
-import com.payroc.payrocsdktestapp.BuildConfig
+import android.widget.Toast
 import com.payroc.payrocsdktestapp.R
-import com.payroc.payrocsdktestapp.ui.manualtransaction.ManualTransactionFragment
-import com.payroc.sdk.PLog
-import com.payroc.sdk.enums.Environment
-import com.payroc.sdk.enums.Gateways
-import com.payroc.sdk.models.DefaultStyling
+import com.payroc.sdk.enums.ActivityResultTypes
 import com.payroc.sdk.models.LineItem
 import com.payroc.sdk.models.Transaction
-import com.payroc.sdk.models.pos.manual.PaymentDeviceManual
-import stringLiveData
-import java.math.BigDecimal
 import com.payroc.sdk.models.validators.TxnAmount
-
+import com.payroc.sdk.ui.PaymentProcessingActivity
+import java.math.BigDecimal
 
 class EmvTransactionFragment : Fragment() {
 
@@ -34,21 +30,14 @@ class EmvTransactionFragment : Fragment() {
         fun newInstance() = EmvTransactionFragment()
     }
 
-    private var lineItems: ArrayList<LineItem> = arrayListOf()
-    private var cancelTransaction: Boolean = false
-    private var focusView: View? = null
-    private lateinit var viewModel: EmvTransactionViewModel
-    private lateinit var prefs: SharedPreferences
-    private lateinit var deviceStatus: TextView
+    private lateinit var viewModel: EmvTransactionViewModel // Optional
     private lateinit var amount: EditText
     private lateinit var submit: AppCompatButton
+    private var cancelTransaction: Boolean = false
+    private var focusView: View? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.emv_transaction_fragment, container, false)
-        deviceStatus = view.findViewById(R.id.deviceStatusTextView)
         amount = view.findViewById(R.id.txnAmountEmv)
         submit = view.findViewById(R.id.submitEmvTxn)
         submit.setOnClickListener{
@@ -60,46 +49,28 @@ class EmvTransactionFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(EmvTransactionViewModel::class.java)
-
-        prefs = activity!!.getSharedPreferences(getString(R.string.shared_prefs_key), Context.MODE_PRIVATE)!!
-        val gatewayPos = prefs.getInt(getString(R.string.shared_prefs_api_gateway_key), 0)
-        val envPos = prefs.getInt(getString(R.string.shared_prefs_api_environment_key), 0)
-
-        viewModel.payrocSdk.setGateway(
-            prefs.getString(getString(R.string.shared_prefs_api_username_key), "")!!,
-            prefs.getString(getString(R.string.shared_prefs_api_password_key), "")!!,
-            Gateways.values()[gatewayPos],
-            Environment.values()[envPos],
-            DefaultStyling()
-        )
-
-        viewModel.txnResult.observe(this, Observer<String> { status ->
-            deviceStatus.text = status
-        })
-
-        prefs.stringLiveData(getString(R.string.shared_prefs_device_name_key), "").observe(this, Observer<String> { name ->
-            val newString = "Device set: $name"
-            viewModel.activeDeviceName = name!!
-            deviceStatus.text = newString
-        })
-
-        prefs.stringLiveData(getString(R.string.shared_prefs_device_address_key), "").observe(this, Observer<String> { address ->
-            viewModel.activeDeviceAddress = address!!
-        })
-
-        prefs.stringLiveData(getString(R.string.shared_prefs_device_type_key), "").observe(this, Observer<String> { type ->
-            viewModel.activeDeviceType = type!!
-        })
+        viewModel = ViewModelProviders.of(this).get(EmvTransactionViewModel::class.java) // Optional
     }
 
-    private fun createLineItems(){
-        val amount = if (amount.text.isNotEmpty()) amount.text.toString() else getString(R.string.zero_dollars)
-        val lineItem = LineItem(BigDecimal(amount), "Line Item 1", 1, "", Bundle.EMPTY)
-        lineItems.add(lineItem)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            ActivityResultTypes.CREATE_TRANSACTION.ordinal -> {
+                when (resultCode) {
+                    RESULT_OK -> Toast.makeText(context, "Transaction successful", Toast.LENGTH_LONG).show()
+                    RESULT_CANCELED -> Toast.makeText(context, "Transaction cancelled", Toast.LENGTH_LONG).show()
+                    else -> {
+                        val error = activity?.intent?.extras?.getString(getString(R.string.extra_error))
+                        Toast.makeText(context, "$error", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+        }
     }
 
     private fun isFormContentValid(){
+        cancelTransaction = false
         amount.error = null
         val amountStr = amount.text.toString()
 
@@ -113,21 +84,30 @@ class EmvTransactionFragment : Fragment() {
         cancelTransaction = true
     }
 
+    /**
+     * The following function illustrates everything you need to create a transaction, the SDK will handle the rest.
+     *
+     * @since 1.0.0
+     *
+     */
     private fun startTransaction(){
-        createLineItems()
+        // Create line items
+        val lineItem = LineItem()
+        lineItem.amount = BigDecimal(amount.text.toString())
+        lineItem.description = "Cool product"
 
-        val transaction = Transaction(lineItems, PaymentDeviceManual())
-        // TODO - add tax percentages
-        // TODO - add tip functionality
+        // Add line item(s) to array
+        val lineItems: ArrayList<LineItem> = arrayListOf()
+        lineItems.add(lineItem)
 
-        PLog.i(ManualTransactionFragment.TAG, "Starting Transaction\n${transaction.toHashMap(Gateways.IBX)}", null, BuildConfig.DEBUG)
+        // Create transaction object
+        val transaction = Transaction()
+        transaction.lineItems = lineItems
 
-        // TODO - consider passing a simple message and the response object as well.
-        // TODO - figure out why this won't update the UI
-        viewModel.payrocSdk.startTransaction(context!!, transaction) { success, msg ->
-            PLog.i(ManualTransactionFragment.TAG, "Transaction status: $success \nPayload returned: $msg", null, BuildConfig.DEBUG)
-            viewModel.txnResult.value = msg
-        }
+        // Send transaction object to sdk activity and await result
+        val intent = Intent(context, PaymentProcessingActivity::class.java)
+        intent.putExtra(getString(R.string.extra_transaction), transaction)
+        startActivityForResult(intent, ActivityResultTypes.CREATE_TRANSACTION.ordinal)
     }
 
 }

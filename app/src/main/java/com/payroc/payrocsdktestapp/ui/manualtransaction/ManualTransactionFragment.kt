@@ -64,7 +64,7 @@ class ManualTransactionFragment : Fragment() {
 		if (BuildConfig.DEBUG){
 			amount.setText(getString(R.string.testAmount))
 			cardNumber.setText(getString(R.string.testCard))
-			expDate.setText(getString(R.string.testExpDate).replace("/", "")) // IBX wants no slash // TODO - check formatting on all data points
+			expDate.setText(getString(R.string.testExpDate)) // IBX wants no slash
 			cvNum.setText(getString(R.string.testCvv))
 			postal.setText(getString(R.string.testPostal))
 		}
@@ -92,18 +92,17 @@ class ManualTransactionFragment : Fragment() {
 		viewModel.payrocSdk.setGateway(
 			prefs.getString(getString(R.string.shared_prefs_api_username_key), "")!!,
 			prefs.getString(getString(R.string.shared_prefs_api_password_key), "")!!,
-			Gateways.values()[prefs.getInt(getString(R.string.shared_prefs_api_gateway_key), 0)],
-			Environment.values()[prefs.getInt(getString(R.string.shared_prefs_api_environment_key), 0)],
+			Gateways.values()[gatewayPos],
+			Environment.values()[envPos],
 			DefaultStyling()
 		)
 
 		viewModel.payrocSdk.setPaymentDevice(PaymentDeviceManual())
-
 	}
 
 	private fun createLineItems(){
 		val amount = if (amount.text.isNotEmpty()) amount.text.toString() else "0.00"
-		val lineItem = LineItem(BigDecimal(amount), "Line Item 1", 1, "", Bundle.EMPTY)
+		val lineItem = LineItem(BigDecimal(amount), "Line Item 1", 1)
 		lineItems.add(lineItem)
 	}
 
@@ -128,12 +127,7 @@ class ManualTransactionFragment : Fragment() {
 		if (!TxnExpDate().isValid(expDateStr)) setErrorOnInput(expDate, getString(R.string.error_invalid_exp_date))
 		if (!TxnCvNum().isValid(cvNumStr)) setErrorOnInput(cvNum, getString(R.string.error_invalid_cv_num))
 		if (!Postal().isValid(postalStr)) setErrorOnInput(postal, getString(R.string.error_invalid_postal))
-
-		if (cancelTransaction) {
-			focusView?.requestFocus()
-		} else {
-			startTransaction()
-		}
+		if (cancelTransaction) focusView?.requestFocus() else startTransaction()
 	}
 
 	private fun setErrorOnInput(editText: EditText, error:String){
@@ -144,9 +138,9 @@ class ManualTransactionFragment : Fragment() {
 
 	private fun startTransaction() {
 		createLineItems()
-//			activity!!.showProgress(true)
 
-		val transaction = Transaction(lineItems, PaymentDeviceManual())
+		val transaction = Transaction()
+		transaction.lineItems = lineItems
 		transaction.cardData.cardNum = if (cardNumber.text.isNotEmpty()) cardNumber.text.toString() else "0"
 		transaction.cardData.expDate = if (expDate.text.isNotEmpty()) expDate.text.toString() else "0"
 		transaction.cardData.cvNum = if (cvNum.text.isNotEmpty()) cvNum.text.toString() else "0"
@@ -154,8 +148,7 @@ class ManualTransactionFragment : Fragment() {
 
 		PLog.i(TAG, "Starting Transaction\n${transaction.toHashMap(Gateways.IBX)}", null, BuildConfig.DEBUG)
 
-		// TODO - consider passing a simple message and the response object as well.
-		// TODO - figure out why this won't update the UI
+		// TODO - update this model to use the same on we use on EMV.
 		viewModel.payrocSdk.startTransaction(context!!, transaction) { success, msg ->
 			Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
 			PLog.i(TAG, "Transaction was successful $success \nPayload returned $msg", null, BuildConfig.DEBUG)
