@@ -23,6 +23,7 @@ import android.widget.TextView
 
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
+import com.payroc.sdk.models.validators.EmailAddress
 
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -125,7 +126,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             email.error = getString(R.string.error_field_required)
             focusView = email
             cancel = true
-        } else if (!isEmailValid(emailStr)) {
+        } else if (!EmailAddress.isValid(emailStr)) {
             email.error = getString(R.string.error_invalid_email)
             focusView = email
             cancel = true
@@ -142,11 +143,6 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             mAuthTask = UserLoginTask(emailStr, passwordStr)
             mAuthTask!!.execute(null as Void?)
         }
-    }
-
-    private fun isEmailValid(email: String): Boolean {
-        //TODO: Replace this with your own logic
-        return email.contains("@")
     }
 
     private fun isPasswordValid(password: String): Boolean {
