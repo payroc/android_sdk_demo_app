@@ -8,8 +8,6 @@ import com.payroc.sdk.enums.Environment
 import com.payroc.sdk.enums.Gateways
 
 class ManualTransactionViewModel : ViewModel() {
-
-    var payrocSdk: PayrocSdk = PayrocSdk() // TODO - see if we can init this at a higher level
     lateinit var paymentResult:  MutableLiveData<String>
 
     fun getPaymentResult(): LiveData<String>{
@@ -23,7 +21,4 @@ class ManualTransactionViewModel : ViewModel() {
     val txnResult: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
-
-
-    // TODO - make this view model a shared one
 }

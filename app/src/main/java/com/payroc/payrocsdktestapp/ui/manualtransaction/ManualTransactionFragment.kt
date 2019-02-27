@@ -1,8 +1,10 @@
 package com.payroc.payrocsdktestapp.ui.manualtransaction
 
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
@@ -17,13 +19,16 @@ import android.widget.Toast
 import com.payroc.payrocsdktestapp.BuildConfig
 import com.payroc.payrocsdktestapp.R
 import com.payroc.sdk.PLog
+import com.payroc.sdk.enums.ActivityResultTypes
 import com.payroc.sdk.enums.Environment
 import com.payroc.sdk.enums.Gateways
+import com.payroc.sdk.enums.SupportedDevice
 import com.payroc.sdk.models.DefaultStyling
 import com.payroc.sdk.models.LineItem
 import com.payroc.sdk.models.Transaction
 import com.payroc.sdk.models.pos.manual.PaymentDeviceManual
 import com.payroc.sdk.models.validators.*
+import com.payroc.sdk.ui.PaymentProcessingActivity
 import java.math.BigDecimal
 
 class ManualTransactionFragment : Fragment() {
@@ -85,19 +90,23 @@ class ManualTransactionFragment : Fragment() {
 		viewModel.txnResult.observe(this, Observer<String> { status ->
 			txnResult.text = status
 		})
+	}
 
-		val gatewayPos = prefs.getInt(getString(R.string.shared_prefs_api_gateway_key), 0)
-		val envPos = prefs.getInt(getString(R.string.shared_prefs_api_environment_key), 0)
+	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+		super.onActivityResult(requestCode, resultCode, data)
 
-		viewModel.payrocSdk.setGateway(
-			prefs.getString(getString(R.string.shared_prefs_api_username_key), "")!!,
-			prefs.getString(getString(R.string.shared_prefs_api_password_key), "")!!,
-			Gateways.values()[gatewayPos],
-			Environment.values()[envPos],
-			DefaultStyling()
-		)
-
-		viewModel.payrocSdk.setPaymentDevice(PaymentDeviceManual())
+		when (requestCode) {
+			ActivityResultTypes.CREATE_TRANSACTION.ordinal -> {
+				when (resultCode) {
+					Activity.RESULT_OK -> viewModel.txnResult.value = "Transaction successful" // TODO - clear the form for next payment
+					Activity.RESULT_CANCELED -> viewModel.txnResult.value = "Transaction cancelled" // TODO - preserve form to retry?
+					else -> {
+						val error = activity?.intent?.extras?.getString(getString(R.string.extra_error))
+						Toast.makeText(context, "$error", Toast.LENGTH_LONG).show()
+					}
+				}
+			}
+		}
 	}
 
 	private fun createLineItems(){
@@ -146,11 +155,10 @@ class ManualTransactionFragment : Fragment() {
 		transaction.cardData.cvNum = if (cvNum.text.isNotEmpty()) cvNum.text.toString() else "0"
 		transaction.cardAddress.postal = if (postal.text.isNotEmpty()) postal.text.toString() else "0"
 
-		PLog.i(TAG, "Starting Transaction\n${transaction.toHashMap(Gateways.IBX)}", null, BuildConfig.DEBUG)
-
-		// TODO - update this model to use the same on we use on EMV.
-		viewModel.payrocSdk.startTransaction(context!!, transaction)
-		// TODO  - Move this to its own controlled fragment.
+        val intent = Intent(context, PaymentProcessingActivity::class.java)
+        intent.putExtra(getString(R.string.extra_transaction), transaction)
+        intent.putExtra(getString(R.string.extra_device), SupportedDevice.Manual.name)
+        startActivityForResult(intent, ActivityResultTypes.CREATE_TRANSACTION.ordinal)
 	}
 
 }

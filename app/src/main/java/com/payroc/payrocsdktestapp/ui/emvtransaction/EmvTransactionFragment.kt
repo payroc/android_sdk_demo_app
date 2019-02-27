@@ -14,6 +14,7 @@ import android.widget.EditText
 import android.widget.Toast
 import com.payroc.payrocsdktestapp.R
 import com.payroc.sdk.enums.ActivityResultTypes
+import com.payroc.sdk.enums.SupportedDevice
 import com.payroc.sdk.models.LineItem
 import com.payroc.sdk.models.Transaction
 import com.payroc.sdk.models.validators.TxnAmount
@@ -104,6 +105,7 @@ class EmvTransactionFragment : Fragment() {
         // Send transaction object to sdk activity and await result
         val intent = Intent(context, PaymentProcessingActivity::class.java)
         intent.putExtra(getString(R.string.extra_transaction), transaction)
+        intent.putExtra(getString(R.string.extra_device), SupportedDevice.Simcent.name)
         startActivityForResult(intent, ActivityResultTypes.CREATE_TRANSACTION.ordinal)
     }
 
