@@ -149,12 +149,8 @@ class ManualTransactionFragment : Fragment() {
 		PLog.i(TAG, "Starting Transaction\n${transaction.toHashMap(Gateways.IBX)}", null, BuildConfig.DEBUG)
 
 		// TODO - update this model to use the same on we use on EMV.
-		viewModel.payrocSdk.startTransaction(context!!, transaction) { success, msg ->
-			Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
-			PLog.i(TAG, "Transaction was successful $success \nPayload returned $msg", null, BuildConfig.DEBUG)
-			// Do something with the response for records
-			viewModel.txnResult.value = msg
-		}
+		viewModel.payrocSdk.startTransaction(context!!, transaction)
+		// TODO  - Move this to its own controlled fragment.
 	}
 
 }
