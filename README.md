@@ -16,6 +16,19 @@ Once you have the repo cloned, then you should be able to run the app right out 
 We utilize the strengths of Fragments in Android to cleanly organize each typical use case for the SDK. This should give you a solid feel for how this can be applied to your App, or in some cases, 
 you should be able to copy fragments, and views to your app and be able to use them out of the box with little added effort. They are intentionally left "bland" to aid in ease-of-styling if you do decide to use our template.
 
+In order for your for your app to run correctly with vector images you will need to add the following to your android build config section for your app's build.gradle file. 
+```groovy
+android{
+//...
+    defaultConfig{
+    //...
+        vectorDrawables.useSupportLibrary = true
+    //...
+    }
+//...
+}
+```
+
 ## Local Development
 Make sure you download [Payroc Mobile SDK](https://github.com/payroc/android_pos_sdk) locally and change your gradle.properties file to look like the following:
 ```groovy
