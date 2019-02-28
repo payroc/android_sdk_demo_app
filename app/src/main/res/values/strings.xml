@@ -23,6 +23,8 @@
     <string name="testCvv">123</string>
     <string name="testPostal">84041</string>
 
+    <string name="nuke_stored_settings">Nuke Stored Settings</string>
+    <string name="payment_processing">Payment Processing</string>
     <string name="manual_pay">Manual Pay</string>
     <string name="emv_contactless">EMV / Contactless</string>
     <string name="extras">Extras</string>
@@ -35,7 +37,4 @@
     <string name="api_username">Api Username</string>
     <string name="api_password">Api Password</string>
 
-    <string name="save">Save</string>
-    <string name="nuke_stored_settings">Nuke Stored Settings</string>
-    <string name="payment_processing">Payment Processing</string>
 </resources>

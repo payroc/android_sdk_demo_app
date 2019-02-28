@@ -19,6 +19,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" android:importantForAutofill="no"/>
+    <ImageView
+            android:layout_width="40dp"
+            android:layout_height="30dp" app:srcCompat="@drawable/ic_card_default"
+            android:id="@+id/cardTypeImage"
+            app:layout_constraintBottom_toBottomOf="@+id/cardNumber"
+            app:layout_constraintTop_toTopOf="@+id/cardNumber" app:layout_constraintStart_toStartOf="@+id/txnAmount"
+            android:layout_marginStart="8dp" android:contentDescription="Card Type Image"/>
     <EditText
             android:id="@+id/cardNumber"
             android:layout_width="0dp"
@@ -29,8 +36,8 @@
             android:inputType="numberSigned"
             android:singleLine="true"
             app:layout_constraintEnd_toEndOf="@+id/txnAmount"
-            app:layout_constraintStart_toStartOf="@+id/txnAmount"
-            app:layout_constraintTop_toBottomOf="@+id/txnAmount" android:importantForAutofill="no"/>
+            app:layout_constraintTop_toBottomOf="@+id/txnAmount" android:importantForAutofill="no"
+            app:layout_constraintStart_toEndOf="@+id/cardTypeImage" android:layout_marginStart="8dp"/>
 
     <EditText
             android:id="@+id/expDate"
@@ -41,8 +48,9 @@
             android:inputType="date"
             android:singleLine="true"
             app:layout_constraintEnd_toStartOf="@+id/cvvNum"
-            app:layout_constraintStart_toStartOf="@+id/cardNumber"
-            app:layout_constraintTop_toTopOf="@+id/cvvNum" android:importantForAutofill="no"/>
+            app:layout_constraintStart_toStartOf="@+id/txnAmount"
+            app:layout_constraintTop_toTopOf="@+id/cvvNum" android:importantForAutofill="no"
+    />
 
     <EditText
             android:id="@+id/cvvNum"

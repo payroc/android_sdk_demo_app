@@ -10,26 +10,27 @@ import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
 import android.support.v7.widget.AppCompatButton
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.payroc.payrocsdktestapp.BuildConfig
 import com.payroc.payrocsdktestapp.R
-import com.payroc.sdk.PLog
 import com.payroc.sdk.enums.ActivityResultTypes
-import com.payroc.sdk.enums.Environment
-import com.payroc.sdk.enums.Gateways
+import com.payroc.sdk.enums.CardType
 import com.payroc.sdk.enums.SupportedDevice
-import com.payroc.sdk.models.DefaultStyling
+import com.payroc.sdk.helpers.CardUtils
 import com.payroc.sdk.models.LineItem
 import com.payroc.sdk.models.Transaction
-import com.payroc.sdk.models.pos.manual.PaymentDeviceManual
 import com.payroc.sdk.models.validators.*
 import com.payroc.sdk.ui.PaymentProcessingActivity
 import java.math.BigDecimal
+import kotlin.concurrent.thread
 
 class ManualTransactionFragment : Fragment() {
 
@@ -43,6 +44,7 @@ class ManualTransactionFragment : Fragment() {
 	private var focusView: View? = null
 	private lateinit var viewModel: ManualTransactionViewModel
 	private lateinit var prefs: SharedPreferences
+	private lateinit var cardTypeImage: ImageView
 	private lateinit var amount: EditText
 	private lateinit var cardNumber: EditText
 	private lateinit var expDate: EditText
@@ -50,6 +52,7 @@ class ManualTransactionFragment : Fragment() {
 	private lateinit var postal: EditText
 	private lateinit var submit: AppCompatButton
 	private lateinit var txnResult: TextView
+	private var cardType: CardType = CardType.Default
 
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -57,6 +60,7 @@ class ManualTransactionFragment : Fragment() {
 		val subLayout: ConstraintLayout = view.findViewById(R.id.manualForm)
 
 		amount = subLayout.findViewById(R.id.txnAmount)
+		cardTypeImage = subLayout.findViewById(R.id.cardTypeImage)
 		cardNumber = subLayout.findViewById(R.id.cardNumber)
 		expDate = subLayout.findViewById(R.id.expDate)
 		cvNum = subLayout.findViewById(R.id.cvvNum)
@@ -74,7 +78,25 @@ class ManualTransactionFragment : Fragment() {
 			postal.setText(getString(R.string.testPostal))
 		}
 
-		// TODO - implement listeners on text change that have full validations on each field.
+		cardNumber.addTextChangedListener(object: TextWatcher{
+			override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+			override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+			override fun afterTextChanged(s: Editable?) {
+				// Optimization - no need to check card type after first six digits.
+				if (s!!.length >= 6) {
+					thread(start = true) {
+
+						cardType = CardUtils.getCardType(s.toString())
+						activity!!.runOnUiThread {
+							cardTypeImage.setImageResource(cardType.image)
+						}
+					}
+				}
+			}
+		})
+
 		submit.setOnClickListener{
 			isFormContentValid()
 		}
@@ -154,6 +176,7 @@ class ManualTransactionFragment : Fragment() {
 		transaction.cardData.expDate = if (expDate.text.isNotEmpty()) expDate.text.toString() else "0"
 		transaction.cardData.cvNum = if (cvNum.text.isNotEmpty()) cvNum.text.toString() else "0"
 		transaction.cardAddress.postal = if (postal.text.isNotEmpty()) postal.text.toString() else "0"
+		transaction.cardData.cardName = cardType
 
         val intent = Intent(context, PaymentProcessingActivity::class.java)
         intent.putExtra(getString(R.string.extra_transaction), transaction)
