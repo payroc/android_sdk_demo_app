@@ -57,7 +57,7 @@ class EmvTransactionFragment : Fragment() {
             ActivityResultTypes.CREATE_TRANSACTION.ordinal -> {
                 when (resultCode) {
                     RESULT_OK -> Toast.makeText(context, "Transaction successful", Toast.LENGTH_LONG).show()
-                    RESULT_CANCELED -> Toast.makeText(context, "Transaction cancelled", Toast.LENGTH_LONG).show()
+                    RESULT_CANCELED -> Toast.makeText(context, "Transaction cancelled ${data?.extras?.getString(getString(R.string.extra_error))}", Toast.LENGTH_LONG).show()
                     else -> {
                         val error = activity?.intent?.extras?.getString(getString(R.string.extra_error))
                         Toast.makeText(context, "$error", Toast.LENGTH_LONG).show()
