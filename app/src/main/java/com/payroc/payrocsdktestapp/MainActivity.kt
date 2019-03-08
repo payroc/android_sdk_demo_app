@@ -3,7 +3,6 @@ package com.payroc.payrocsdktestapp
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -14,7 +13,7 @@ import android.view.MenuItem
 import com.payroc.sdk.PLog
 import com.payroc.sdk.PayrocSdk
 import com.payroc.sdk.enums.ActivityResultTypes
-import com.payroc.sdk.enums.TransactionModes
+import com.payroc.sdk.enums.TxnModes
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
@@ -27,7 +26,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         fab.setOnClickListener { view ->
             val intent = Intent(this, TransactionActivity::class.java)
-            intent.putExtra("mode", TransactionModes.MANUAL.name)
+            intent.putExtra("mode", TxnModes.MANUAL.name)
             startActivityForResult(intent, ActivityResultTypes.CREATE_TRANSACTION.ordinal)
         }
 
@@ -74,27 +73,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
             R.id.nav_manual -> {
                 val intent = Intent(this, TransactionActivity::class.java)
-                intent.putExtra("mode", TransactionModes.MANUAL.name)
+                intent.putExtra("mode", TxnModes.MANUAL.name)
                 startActivityForResult(intent, ActivityResultTypes.CREATE_TRANSACTION.ordinal)
             }
             R.id.nav_emv -> {
                 val intent = Intent(this, TransactionActivity::class.java)
-                intent.putExtra("mode", TransactionModes.EMV.name)
+                intent.putExtra("mode", TxnModes.EMV.name)
                 startActivityForResult(intent, ActivityResultTypes.CREATE_TRANSACTION.ordinal)
             }
             R.id.nav_multi_line -> {
                 val intent = Intent(this, TransactionActivity::class.java)
-                intent.putExtra("mode", TransactionModes.MULTI_LINE.name)
+                intent.putExtra("mode", TxnModes.MULTI_LINE.name)
                 startActivityForResult(intent, ActivityResultTypes.CREATE_TRANSACTION.ordinal)
             }
             R.id.nav_ingest -> {
                 val intent = Intent(this, TransactionActivity::class.java)
-                intent.putExtra("mode", TransactionModes.INGEST.name)
+                intent.putExtra("mode", TxnModes.INGEST.name)
                 startActivityForResult(intent, ActivityResultTypes.CREATE_TRANSACTION.ordinal)
             }
             R.id.nav_inventory -> {
                 val intent = Intent(this, TransactionActivity::class.java)
-                intent.putExtra("mode", TransactionModes.INVENTORY.name)
+                intent.putExtra("mode", TxnModes.INVENTORY.name)
                 startActivityForResult(intent, ActivityResultTypes.CREATE_TRANSACTION.ordinal)
             }
             R.id.nav_devices -> {

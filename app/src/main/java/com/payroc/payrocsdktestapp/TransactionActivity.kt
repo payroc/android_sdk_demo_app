@@ -8,7 +8,7 @@ import com.payroc.payrocsdktestapp.ui.inventory.InventoryFragment
 import com.payroc.payrocsdktestapp.ui.manualtransaction.ManualTransactionFragment
 import com.payroc.payrocsdktestapp.ui.multilinetransaction.MultiLineTransactionFragment
 import com.payroc.sdk.PLog
-import com.payroc.sdk.enums.TransactionModes
+import com.payroc.sdk.enums.TxnModes
 import com.payroc.sdk.ui.transaction.CardIngestFragment
 
 
@@ -27,11 +27,11 @@ class TransactionActivity : AppCompatActivity() {
 		supportActionBar!!.title = "$txnType Transaction"
 
 		when (txnType) {
-			TransactionModes.MANUAL.name -> startFragment(savedInstanceState, R.layout.manual_transaction_activity, ManualTransactionFragment.newInstance())
-			TransactionModes.EMV.name -> startFragment(savedInstanceState, R.layout.emv_transaction_activity, EmvTransactionFragment.newInstance())
-			TransactionModes.MULTI_LINE.name -> startFragment(savedInstanceState, R.layout.multi_line_transaction_activity, MultiLineTransactionFragment.newInstance())
-			TransactionModes.INVENTORY.name -> startFragment(savedInstanceState, R.layout.inventory_transaction_activity, InventoryFragment.newInstance())
-			TransactionModes.INGEST.name -> startFragment(savedInstanceState, R.layout.card_ingest_fragment, CardIngestFragment.newInstance()) // TODO - uses form we control completely. make sure it doesn't blow up
+			TxnModes.MANUAL.name -> startFragment(savedInstanceState, R.layout.manual_transaction_activity, ManualTransactionFragment.newInstance())
+			TxnModes.EMV.name -> startFragment(savedInstanceState, R.layout.emv_transaction_activity, EmvTransactionFragment.newInstance())
+			TxnModes.MULTI_LINE.name -> startFragment(savedInstanceState, R.layout.multi_line_transaction_activity, MultiLineTransactionFragment.newInstance())
+			TxnModes.INVENTORY.name -> startFragment(savedInstanceState, R.layout.inventory_transaction_activity, InventoryFragment.newInstance())
+			TxnModes.INGEST.name -> startFragment(savedInstanceState, R.layout.card_ingest_fragment, CardIngestFragment.newInstance()) // TODO - uses form we control completely. make sure it doesn't blow up
 			else -> PLog.i(TAG, "No transaction type was specified.")
 		}
 
