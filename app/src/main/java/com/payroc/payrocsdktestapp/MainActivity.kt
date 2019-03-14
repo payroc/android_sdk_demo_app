@@ -14,8 +14,12 @@ import com.payroc.sdk.PLog
 import com.payroc.sdk.PayrocSdk
 import com.payroc.sdk.enums.ActivityResultTypes
 import com.payroc.sdk.enums.TxnModes
+import com.payroc.sdk.models.LineItem
+import com.payroc.sdk.models.Transaction
+import com.payroc.sdk.ui.transaction.SignatureActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import java.math.BigDecimal
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -102,6 +106,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_history -> {
                 val intent = Intent(this, HistoryActivity::class.java)
                 startActivityForResult(intent, ActivityResultTypes.GET_HISTORY.ordinal)
+            }
+            R.id.signature_test -> {
+                val lineItems = LineItem(BigDecimal.TEN)
+                val transaction = Transaction(arrayListOf(lineItems))
+                val intent = Intent(this, SignatureActivity::class.java)
+                intent.putExtra(getString(R.string.extra_transaction), transaction)
+                startActivityForResult(intent, ActivityResultTypes.GET_SIGNATURE.ordinal)
             }
             R.id.nav_tools -> {
                 val intent = Intent(this, ToolsActivity::class.java)
