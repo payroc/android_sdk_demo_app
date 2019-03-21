@@ -9,7 +9,7 @@ import com.payroc.payrocsdktestapp.ui.manualtransaction.ManualTransactionFragmen
 import com.payroc.payrocsdktestapp.ui.multilinetransaction.MultiLineTransactionFragment
 import com.payroc.sdk.PLog
 import com.payroc.sdk.enums.TxnModes
-import com.payroc.sdk.ui.transaction.CardIngestFragment
+import com.payroc.sdk.ui.cardingest.CardIngestFragment
 
 
 class TransactionActivity : AppCompatActivity() {

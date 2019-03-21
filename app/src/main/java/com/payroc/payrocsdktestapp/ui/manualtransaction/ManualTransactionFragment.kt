@@ -28,7 +28,7 @@ import com.payroc.sdk.helpers.CardUtils
 import com.payroc.sdk.models.LineItem
 import com.payroc.sdk.models.Transaction
 import com.payroc.sdk.models.validators.*
-import com.payroc.sdk.ui.PaymentProcessingActivity
+import com.payroc.sdk.ui.paymentprocessing.PaymentProcessingActivity
 import java.math.BigDecimal
 import kotlin.concurrent.thread
 
@@ -118,7 +118,7 @@ class ManualTransactionFragment : Fragment() {
 		super.onActivityResult(requestCode, resultCode, data)
 
 		when (requestCode) {
-			ActivityResultTypes.CREATE_TRANSACTION.ordinal -> {
+			ActivityResultTypes.CREATE_TXN.ordinal -> {
 				when (resultCode) {
 					Activity.RESULT_OK -> viewModel.txnResult.value = "Transaction successful" // TODO - clear the form for next payment
 					Activity.RESULT_CANCELED -> viewModel.txnResult.value = "Transaction cancelled" // TODO - preserve form to retry?
@@ -181,7 +181,7 @@ class ManualTransactionFragment : Fragment() {
         val intent = Intent(context, PaymentProcessingActivity::class.java)
         intent.putExtra(getString(R.string.extra_transaction), transaction)
         intent.putExtra(getString(R.string.extra_device), SupportedDevice.Manual.name)
-        startActivityForResult(intent, ActivityResultTypes.CREATE_TRANSACTION.ordinal)
+        startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
 	}
 
 }

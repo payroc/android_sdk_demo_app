@@ -41,8 +41,9 @@
         <activity android:name=".HistoryActivity"/>
         <activity android:name=".ToolsActivity"/>
         <activity android:name=".SettingsActivity"/>
-        <activity android:name="com.payroc.sdk.ui.DevicesActivity"/>
-        <activity android:name="com.payroc.sdk.ui.PaymentProcessingActivity" />
+        <activity android:name="com.payroc.sdk.ui.devices.DevicesActivity"/>
+        <activity android:name="com.payroc.sdk.ui.paymentprocessing.PaymentProcessingActivity" />
+        <activity android:name="com.payroc.sdk.ui.numberpad.NumberPadActivity"/>
 
     </application>
 

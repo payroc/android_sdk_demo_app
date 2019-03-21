@@ -16,7 +16,11 @@ import com.payroc.sdk.enums.ActivityResultTypes
 import com.payroc.sdk.enums.TxnModes
 import com.payroc.sdk.models.LineItem
 import com.payroc.sdk.models.Transaction
-import com.payroc.sdk.ui.transaction.SignatureActivity
+import com.payroc.sdk.ui.numberpad.NumberPadActivity
+import com.payroc.sdk.ui.numberpad.NumberPadFragment
+import com.payroc.sdk.ui.review.TxnReviewActivity
+import com.payroc.sdk.ui.signature.SignatureActivity
+import com.payroc.sdk.ui.tip.TipActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import java.math.BigDecimal
@@ -25,13 +29,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+//        if (savedInstanceState == null) {
+//            supportFragmentManager.beginTransaction()
+//                .replace(R.id.container, NumberPadFragment.newInstance())
+//                .commitNow()
+//        }
+
         setSupportActionBar(toolbar)
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
         fab.setOnClickListener { view ->
             val intent = Intent(this, TransactionActivity::class.java)
             intent.putExtra("mode", TxnModes.MANUAL.name)
-            startActivityForResult(intent, ActivityResultTypes.CREATE_TRANSACTION.ordinal)
+            startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
         }
 
         val toggle = ActionBarDrawerToggle(
@@ -78,27 +89,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_manual -> {
                 val intent = Intent(this, TransactionActivity::class.java)
                 intent.putExtra("mode", TxnModes.MANUAL.name)
-                startActivityForResult(intent, ActivityResultTypes.CREATE_TRANSACTION.ordinal)
+                startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
             }
             R.id.nav_emv -> {
                 val intent = Intent(this, TransactionActivity::class.java)
                 intent.putExtra("mode", TxnModes.EMV.name)
-                startActivityForResult(intent, ActivityResultTypes.CREATE_TRANSACTION.ordinal)
+                startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
             }
             R.id.nav_multi_line -> {
                 val intent = Intent(this, TransactionActivity::class.java)
                 intent.putExtra("mode", TxnModes.MULTI_LINE.name)
-                startActivityForResult(intent, ActivityResultTypes.CREATE_TRANSACTION.ordinal)
+                startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
             }
             R.id.nav_ingest -> {
                 val intent = Intent(this, TransactionActivity::class.java)
                 intent.putExtra("mode", TxnModes.INGEST.name)
-                startActivityForResult(intent, ActivityResultTypes.CREATE_TRANSACTION.ordinal)
+                startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
             }
             R.id.nav_inventory -> {
                 val intent = Intent(this, TransactionActivity::class.java)
                 intent.putExtra("mode", TxnModes.INVENTORY.name)
-                startActivityForResult(intent, ActivityResultTypes.CREATE_TRANSACTION.ordinal)
+                startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
             }
             R.id.nav_devices -> {
                 PayrocSdk().findDevice(this)
@@ -113,6 +124,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val intent = Intent(this, SignatureActivity::class.java)
                 intent.putExtra(getString(R.string.extra_transaction), transaction)
                 startActivityForResult(intent, ActivityResultTypes.GET_SIGNATURE.ordinal)
+            }
+            R.id.tip_test -> {
+                val lineItems = LineItem(BigDecimal.TEN)
+                val transaction = Transaction(arrayListOf(lineItems))
+                val intent = Intent(this, TipActivity::class.java)
+                intent.putExtra(getString(R.string.extra_transaction), transaction)
+                startActivityForResult(intent, ActivityResultTypes.GET_TIP.ordinal)
+            }
+            R.id.txn_review_test -> {
+                val lineItems = LineItem(BigDecimal.TEN)
+                val transaction = Transaction(arrayListOf(lineItems))
+                val intent = Intent(this, TxnReviewActivity::class.java)
+                intent.putExtra(getString(R.string.extra_transaction), transaction)
+                startActivityForResult(intent, ActivityResultTypes.TXN_REVIEW.ordinal)
+            }
+            R.id.numpad_test -> {
+                val intent = Intent(this, NumberPadActivity::class.java)
+                intent.putExtra(getString(R.string.extra_tax_enabled), true)
+                intent.putExtra(getString(R.string.extra_tax_percent), "6.5")
+                startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
             }
             R.id.nav_tools -> {
                 val intent = Intent(this, ToolsActivity::class.java)

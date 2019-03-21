@@ -18,7 +18,7 @@ import com.payroc.sdk.enums.SupportedDevice
 import com.payroc.sdk.models.LineItem
 import com.payroc.sdk.models.Transaction
 import com.payroc.sdk.models.validators.TxnAmount
-import com.payroc.sdk.ui.PaymentProcessingActivity
+import com.payroc.sdk.ui.paymentprocessing.PaymentProcessingActivity
 import java.math.BigDecimal
 
 class EmvTransactionFragment : Fragment() {
@@ -54,7 +54,7 @@ class EmvTransactionFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
 
         when (requestCode) {
-            ActivityResultTypes.CREATE_TRANSACTION.ordinal -> {
+            ActivityResultTypes.CREATE_TXN.ordinal -> {
                 when (resultCode) {
                     RESULT_OK -> Toast.makeText(context, "Transaction successful", Toast.LENGTH_LONG).show()
                     RESULT_CANCELED -> Toast.makeText(context, "Transaction cancelled ${data?.extras?.getString(getString(R.string.extra_error))}", Toast.LENGTH_LONG).show()
@@ -106,7 +106,7 @@ class EmvTransactionFragment : Fragment() {
         val intent = Intent(context, PaymentProcessingActivity::class.java)
         intent.putExtra(getString(R.string.extra_transaction), transaction)
         intent.putExtra(getString(R.string.extra_device), SupportedDevice.Simcent.name)
-        startActivityForResult(intent, ActivityResultTypes.CREATE_TRANSACTION.ordinal)
+        startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
     }
 
 }
