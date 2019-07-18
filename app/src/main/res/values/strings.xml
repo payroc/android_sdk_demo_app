@@ -37,6 +37,7 @@
     <string name="api_username">Api Username</string>
     <string name="api_password">Api Password</string>
     <string name="signature_test">Signature Test</string>
+    <string name="email_test">Email Test</string>
     <string name="tip_test">Tip Test</string>
     <string name="transaction_review_test">Transaction Review Test</string>
     <string name="numpad_test">Numpad Test</string>

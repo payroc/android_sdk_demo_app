@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import java.math.BigDecimal
 import com.crashlytics.android.Crashlytics
+import com.payroc.sdk.ui.email.RequestEmailActivity
 import io.fabric.sdk.android.Fabric
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -43,8 +44,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
         fab.setOnClickListener { view ->
-            val intent = Intent(this, TransactionActivity::class.java)
-            intent.putExtra("mode", TxnModes.MANUAL.name)
+//            val intent = Intent(this, TransactionActivity::class.java)
+//            intent.putExtra("mode", TxnModes.MANUAL.name)
+//            startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
+
+            val intent = Intent(this, NumberPadActivity::class.java)
+            intent.putExtra(getString(R.string.extra_tax_enabled), true)
+            intent.putExtra(getString(R.string.extra_tax_percent), "6.5")
             startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
         }
 
@@ -127,6 +133,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val intent = Intent(this, SignatureActivity::class.java)
                 intent.putExtra(getString(R.string.extra_transaction), transaction)
                 startActivityForResult(intent, ActivityResultTypes.GET_SIGNATURE.ordinal)
+            }
+            R.id.email_test -> {
+                val intent = Intent(this, RequestEmailActivity::class.java)
+                startActivityForResult(intent, ActivityResultTypes.GET_EMAIL.ordinal)
             }
             R.id.tip_test -> {
                 val lineItems = LineItem(BigDecimal.TEN)

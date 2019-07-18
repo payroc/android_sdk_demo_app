@@ -37,6 +37,10 @@
             android:icon="@drawable/ic_check_capture_outline"
             android:title="@string/signature_test" />
         <item
+            android:id="@+id/email_test"
+            android:icon="@drawable/ic_menu_send"
+            android:title="@string/email_test" />
+        <item
             android:id="@+id/tip_test"
             android:icon="@drawable/ic_check_capture_outline"
             android:title="@string/tip_test" />
