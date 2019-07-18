@@ -28,7 +28,7 @@
         </activity>
         <activity
                 android:name=".MainActivity"
-                android:label="@string/app_name"
+                android:label="@string/main_activity_title"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -44,6 +44,8 @@
         <activity android:name="com.payroc.sdk.ui.devices.DevicesActivity"/>
         <activity android:name="com.payroc.sdk.ui.paymentprocessing.PaymentProcessingActivity" />
         <activity android:name="com.payroc.sdk.ui.numberpad.NumberPadActivity"/>
+        <activity android:name="com.payroc.sdk.ui.signature.SignatureActivity"/>
+        <activity android:name="com.payroc.sdk.ui.email.RequestEmailActivity"/>
 
     </application>
 
