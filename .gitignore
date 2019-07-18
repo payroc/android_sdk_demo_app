@@ -142,3 +142,5 @@ fabric.properties
 # Editor-based Rest Client
 .idea/httpRequests
 
+# keystore file - saved in password manager.
+/payroc_android
