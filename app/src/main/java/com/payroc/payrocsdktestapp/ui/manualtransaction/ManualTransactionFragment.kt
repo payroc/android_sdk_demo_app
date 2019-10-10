@@ -98,9 +98,9 @@ class ManualTransactionFragment : Fragment() {
 		})
 
 		submit.setOnClickListener{
+			viewModel.txnResult.value = ""
 			isFormContentValid()
 		}
-
 		return view
 	}
 
@@ -120,8 +120,14 @@ class ManualTransactionFragment : Fragment() {
 		when (requestCode) {
 			ActivityResultTypes.CREATE_TXN.ordinal -> {
 				when (resultCode) {
-					Activity.RESULT_OK -> viewModel.txnResult.value = "Transaction successful" // TODO - clear the form for next payment
-					Activity.RESULT_CANCELED -> viewModel.txnResult.value = "Transaction cancelled" // TODO - preserve form to retry?
+					Activity.RESULT_OK -> {
+						val message = data!!.getStringExtra("message")
+						viewModel.txnResult.value = "Transaction successful " + message
+					} // TODO - clear the form for next payment
+					Activity.RESULT_CANCELED -> {
+						val error = data!!.getStringExtra("error")
+						viewModel.txnResult.value = "Transaction cancelled " + error
+					} // TODO - preserve form to retry?
 					else -> {
 						val error = activity?.intent?.extras?.getString(getString(R.string.extra_error))
 						Toast.makeText(context, "$error", Toast.LENGTH_LONG).show()
@@ -132,6 +138,7 @@ class ManualTransactionFragment : Fragment() {
 	}
 
 	private fun createLineItems(){
+		lineItems.clear()
 		val amount = if (amount.text.isNotEmpty()) amount.text.toString() else "0.00"
 		val lineItem = LineItem(BigDecimal(amount), "Line Item 1", 1)
 		lineItems.add(lineItem)
