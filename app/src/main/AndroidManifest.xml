@@ -46,6 +46,7 @@
         <activity android:name=".SettingsActivity"/>
         <activity android:name="com.payroc.sdk.ui.devices.DevicesActivity"/>
         <activity android:name="com.payroc.sdk.ui.paymentprocessing.PaymentProcessingActivity" />
+        <activity android:name="com.payroc.sdk.ui.multipart_payment.PartialPaymentActivity"/>
         <activity android:name="com.payroc.sdk.ui.numberpad.NumberPadActivity"/>
         <activity android:name="com.payroc.sdk.ui.signature.SignatureActivity"/>
         <activity android:name="com.payroc.sdk.ui.email.RequestEmailActivity"/>

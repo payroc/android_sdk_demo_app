@@ -10,22 +10,24 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.app.AppCompatDelegate
 import android.view.Menu
 import android.view.MenuItem
+import com.crashlytics.android.Crashlytics
 import com.payroc.sdk.PLog
 import com.payroc.sdk.PayrocSdk
 import com.payroc.sdk.enums.ActivityResultTypes
 import com.payroc.sdk.enums.TxnModes
 import com.payroc.sdk.models.LineItem
 import com.payroc.sdk.models.Transaction
+import com.payroc.sdk.models.TransactionBatch.CREATOR.isExistUnCompleteBatch
+import com.payroc.sdk.ui.email.RequestEmailActivity
+import com.payroc.sdk.ui.multipart_payment.PartialPaymentActivity
 import com.payroc.sdk.ui.numberpad.NumberPadActivity
 import com.payroc.sdk.ui.review.TxnReviewActivity
 import com.payroc.sdk.ui.signature.SignatureActivity
 import com.payroc.sdk.ui.tip.TipActivity
+import io.fabric.sdk.android.Fabric
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import java.math.BigDecimal
-import com.crashlytics.android.Crashlytics
-import com.payroc.sdk.ui.email.RequestEmailActivity
-import io.fabric.sdk.android.Fabric
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +62,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
-
+        if (isExistUnCompleteBatch(this)) {
+            val intent = Intent(this, PartialPaymentActivity::class.java)
+            startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
+        }
         nav_view.setNavigationItemSelectedListener(this)
     }
 
@@ -95,6 +100,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
+            R.id.nav_partial -> {
+                val intent = Intent(this, TransactionActivity::class.java)
+                intent.putExtra("mode", TxnModes.PARTIAL.name)
+                startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
+            }
             R.id.nav_manual -> {
                 val intent = Intent(this, TransactionActivity::class.java)
                 intent.putExtra("mode", TxnModes.MANUAL.name)
