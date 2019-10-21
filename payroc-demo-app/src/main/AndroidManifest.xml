@@ -21,6 +21,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:name="androidx.multidex.MultiDexApplication">
+
         <activity
                 android:name=".LoginActivity"
                 android:label="@string/title_activity_login"
@@ -29,14 +30,23 @@
                 <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
         </activity>
+
+        <activity
+                android:name=".SplashActivity"
+                android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
+        </activity>
+
         <activity
                 android:name=".MainActivity"
                 android:label="@string/main_activity_title"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
         </activity>
         <activity android:name=".TransactionActivity"/>
