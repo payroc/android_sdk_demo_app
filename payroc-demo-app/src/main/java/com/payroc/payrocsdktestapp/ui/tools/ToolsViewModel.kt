@@ -1,6 +1,6 @@
 package com.payroc.payrocsdktestapp.ui.tools
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import com.payroc.sdk.PayrocSdk
 
 class ToolsViewModel : ViewModel() {

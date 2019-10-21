@@ -1,8 +1,8 @@
 package com.payroc.payrocsdktestapp
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import com.payroc.payrocsdktestapp.ui.emvtransaction.EmvTransactionFragment
 import com.payroc.payrocsdktestapp.ui.inventory.InventoryFragment
 import com.payroc.payrocsdktestapp.ui.manualtransaction.ManualTransactionFragment

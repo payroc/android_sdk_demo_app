@@ -2,11 +2,11 @@ package com.payroc.payrocsdktestapp.ui.partialtransaction
 
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.AppCompatButton
+import androidx.fragment.app.Fragment
+import androidx.appcompat.widget.AppCompatButton
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
