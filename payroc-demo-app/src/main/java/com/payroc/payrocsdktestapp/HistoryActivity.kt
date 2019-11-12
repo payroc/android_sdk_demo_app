@@ -1,23 +1,40 @@
 package com.payroc.payrocsdktestapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.payroc.payrocsdktestapp.ui.history.HistoryFragment
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import com.payroc.sdk.R
+import com.payroc.sdk.ui.history.HistoryFragment
+
 
 class HistoryActivity : AppCompatActivity() {
-    // TODO - make sure to add function for re-sending receipts.
-    // TODO - for receipts, perhaps we give them a way to hook into the process in addition to us sending a receipt on their behalf?
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        supportActionBar!!.title = "History"
-
-        setContentView(R.layout.history_activity)
+        setContentView(R.layout.transaction_history_activity)
+        supportActionBar?.title = "Transaction List"
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, HistoryFragment.newInstance())
                 .commitNow()
         }
+
+/*        val styling = DefaultStyling()
+        styling.bgColor = Color.BLUE
+        styling.bgDrawable = R.drawable.bg_gradient_primary
+        styling.bgAnimation = "background_animation.json"
+        PayrocSdk.styling = styling*/
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 }

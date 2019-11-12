@@ -3,14 +3,15 @@ package com.payroc.payrocsdktestapp
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import com.google.android.material.navigation.NavigationView
-import androidx.core.view.GravityCompat
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import android.view.Menu
-import android.view.MenuItem
+import androidx.core.view.GravityCompat
 import com.crashlytics.android.Crashlytics
+import com.google.android.material.navigation.NavigationView
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.payroc.sdk.PLog
 import com.payroc.sdk.PayrocSdk
 import com.payroc.sdk.enums.ActivityResultTypes
@@ -28,8 +29,6 @@ import io.fabric.sdk.android.Fabric
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import java.math.BigDecimal
-import com.google.firebase.analytics.FirebaseAnalytics
-
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -106,14 +105,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
+            R.id.nav_devices -> {
+                PayrocSdk().findDevice(this)
+            }
+            R.id.nav_numpad -> {
+                val intent = Intent(this, NumberPadActivity::class.java)
+                intent.putExtra(getString(R.string.extra_tax_enabled), true)
+                intent.putExtra(getString(R.string.extra_tax_percent), "6.5")
+                startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
+            }
             R.id.nav_partial -> {
                 val intent = Intent(this, TransactionActivity::class.java)
                 intent.putExtra("mode", TxnModes.PARTIAL.name)
-                startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
-            }
-            R.id.nav_manual -> {
-                val intent = Intent(this, TransactionActivity::class.java)
-                intent.putExtra("mode", TxnModes.MANUAL.name)
                 startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
             }
             R.id.nav_emv -> {
@@ -121,9 +124,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 intent.putExtra("mode", TxnModes.EMV.name)
                 startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
             }
-            R.id.nav_multi_line -> {
+            R.id.nav_manual -> {
                 val intent = Intent(this, TransactionActivity::class.java)
-                intent.putExtra("mode", TxnModes.MULTI_LINE.name)
+                intent.putExtra("mode", TxnModes.MANUAL.name)
                 startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
             }
             R.id.nav_ingest -> {
@@ -131,13 +134,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 intent.putExtra("mode", TxnModes.INGEST.name)
                 startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
             }
+            R.id.nav_multi_line -> {
+                val intent = Intent(this, TransactionActivity::class.java)
+                intent.putExtra("mode", TxnModes.MULTI_LINE.name)
+                startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
+            }
             R.id.nav_inventory -> {
                 val intent = Intent(this, TransactionActivity::class.java)
                 intent.putExtra("mode", TxnModes.INVENTORY.name)
                 startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
-            }
-            R.id.nav_devices -> {
-                PayrocSdk().findDevice(this)
             }
             R.id.nav_history -> {
                 val intent = Intent(this, HistoryActivity::class.java)
@@ -150,6 +155,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 intent.putExtra(getString(R.string.extra_transaction), transaction)
                 startActivityForResult(intent, ActivityResultTypes.GET_SIGNATURE.ordinal)
             }
+            R.id.txn_review_test -> {
+                val lineItems = LineItem(BigDecimal.TEN)
+                val transaction = Transaction(arrayListOf(lineItems))
+                val intent = Intent(this, TxnReviewActivity::class.java)
+                intent.putExtra(getString(R.string.extra_transaction), transaction)
+                startActivityForResult(intent, ActivityResultTypes.TXN_REVIEW.ordinal)
+            }
             R.id.email_test -> {
                 val intent = Intent(this, RequestEmailActivity::class.java)
                 startActivityForResult(intent, ActivityResultTypes.GET_EMAIL.ordinal)
@@ -161,20 +173,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 intent.putExtra(getString(R.string.extra_transaction), transaction)
                 startActivityForResult(intent, ActivityResultTypes.GET_TIP.ordinal)
             }
-            R.id.txn_review_test -> {
-                val lineItems = LineItem(BigDecimal.TEN)
-                val transaction = Transaction(arrayListOf(lineItems))
-                val intent = Intent(this, TxnReviewActivity::class.java)
-                intent.putExtra(getString(R.string.extra_transaction), transaction)
-                startActivityForResult(intent, ActivityResultTypes.TXN_REVIEW.ordinal)
-            }
-            R.id.numpad_test -> {
-                val intent = Intent(this, NumberPadActivity::class.java)
-                intent.putExtra(getString(R.string.extra_tax_enabled), true)
-                intent.putExtra(getString(R.string.extra_tax_percent), "6.5")
-                startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
-            }
-            R.id.nav_tools -> {
+            R.id.nav_settings_tools -> {
                 val intent = Intent(this, ToolsActivity::class.java)
                 startActivity(intent)
             }

@@ -4,67 +4,78 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="none">
-
-        <item
-            android:id="@+id/nav_partial"
-            android:icon="@drawable/ic_nav_card_outline"
-            android:title="@string/partial_pay" />
-        <item
-            android:id="@+id/nav_manual"
-            android:icon="@drawable/ic_nav_card_outline"
-            android:title="@string/manual_pay" />
-        <item
-            android:id="@+id/nav_emv"
-            android:icon="@drawable/ic_nav_card_outline"
-            android:title="@string/emv_contactless" />
-        <item
-            android:id="@+id/nav_multi_line"
-            android:icon="@drawable/ic_menu_send"
-            android:title="@string/multi_line_transaction" />
-        <item
-            android:id="@+id/nav_ingest"
-            android:icon="@drawable/ic_menu_send"
-            android:title="@string/ingest_transaction" />
-        <item
-            android:id="@+id/nav_inventory"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/nav_inventory_transaction" />
         <item
             android:id="@+id/nav_devices"
             android:icon="@android:drawable/stat_sys_data_bluetooth"
             android:title="@string/bt_devices" />
         <item
+            android:id="@+id/nav_numpad"
+            android:icon="@drawable/ic_nav_card_outline"
+            android:title="@string/pay_view" />
+        <item
             android:id="@+id/nav_history"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_nav_history"
             android:title="@string/transaction_history" />
-        <item
-            android:id="@+id/signature_test"
-            android:icon="@drawable/ic_check_capture_outline"
-            android:title="@string/signature_test" />
-        <item
-            android:id="@+id/email_test"
-            android:icon="@drawable/ic_menu_send"
-            android:title="@string/email_test" />
-        <item
-            android:id="@+id/tip_test"
-            android:icon="@drawable/ic_check_capture_outline"
-            android:title="@string/tip_test" />
-        <item
-            android:id="@+id/txn_review_test"
-            android:icon="@drawable/ic_check_capture_outline"
-            android:title="@string/transaction_review_test" />
-        <item
-            android:id="@+id/numpad_test"
-            android:icon="@drawable/ic_check_capture_outline"
-            android:title="@string/numpad_test" />
     </group>
+
+    <item android:title="Txn Types">
+        <menu>
+            <item
+                android:id="@+id/nav_partial"
+                android:icon="@drawable/ic_nav_card_outline"
+                android:title="@string/partial_pay" />
+            <item
+                android:id="@+id/nav_manual"
+                android:icon="@drawable/ic_nav_card_outline"
+                android:title="@string/manual_pay" />
+            <item
+                android:id="@+id/nav_emv"
+                android:icon="@drawable/ic_nav_card_outline"
+                android:title="@string/emv_contactless" />
+            <item
+                android:id="@+id/nav_ingest"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/ingest_transaction" />
+            <item
+                android:id="@+id/nav_multi_line"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/multi_line_transaction" />
+            <item
+                android:id="@+id/nav_inventory"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/nav_inventory_transaction" />
+
+        </menu>
+    </item>
+
+
+    <item android:title="Module Tests">
+        <menu>
+            <item
+                android:id="@+id/txn_review_test"
+                android:icon="@drawable/ic_check_capture_outline"
+                android:title="@string/transaction_review_test" />
+            <item
+                android:id="@+id/signature_test"
+                android:icon="@drawable/ic_check_capture_outline"
+                android:title="@string/signature_test" />
+            <item
+                android:id="@+id/email_test"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/email_test" />
+            <item
+                android:id="@+id/tip_test"
+                android:icon="@drawable/ic_check_capture_outline"
+                android:title="@string/tip_test" />
+            <item
+                android:id="@+id/nav_settings_tools"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="@string/settings_page_tools" />
+        </menu>
+    </item>
 
     <item android:title="@string/extras">
         <menu>
-            <item
-                android:id="@+id/nav_tools"
-                android:icon="@drawable/ic_menu_manage"
-                android:title="@string/tools" />
             <item
                 android:id="@+id/nav_nuke_data"
                 android:icon="@drawable/ic_nav_logout"

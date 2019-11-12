@@ -29,7 +29,7 @@
     <string name="partial_pay">Partial Pay</string>
     <string name="emv_contactless">EMV / Contactless</string>
     <string name="extras">Extras</string>
-    <string name="tools">Tools</string>
+    <string name="settings_page_tools">Settings Page Tools</string>
     <string name="ingest_transaction">Ingest Transaction</string>
     <string name="multi_line_transaction">Multi Line Transaction</string>
     <string name="transaction_history">Transaction History</string>
@@ -41,7 +41,7 @@
     <string name="email_test">Email Test</string>
     <string name="tip_test">Tip Test</string>
     <string name="transaction_review_test">Transaction Review Test</string>
-    <string name="numpad_test">Numpad Test</string>
+    <string name="pay_view">Pay View</string>
     <string name="main_activity_title">Payroc SDK Demo App</string>
 
 </resources>
