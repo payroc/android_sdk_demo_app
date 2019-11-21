@@ -56,8 +56,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //            startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
 
             val intent = Intent(this, NumberPadActivity::class.java)
-            intent.putExtra(getString(R.string.extra_tax_enabled), true)
-            intent.putExtra(getString(R.string.extra_tax_percent), "6.5")
+            intent.putExtra(getString(R.string.extra_tax_enabled), false)
+            intent.putExtra(getString(R.string.extra_tax_percent), "0")
             startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
         }
 
