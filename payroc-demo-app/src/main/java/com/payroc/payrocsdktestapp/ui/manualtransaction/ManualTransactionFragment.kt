@@ -121,12 +121,12 @@ class ManualTransactionFragment : Fragment() {
 			ActivityResultTypes.CREATE_TXN.ordinal -> {
 				when (resultCode) {
 					Activity.RESULT_OK -> {
-						val message = data!!.getStringExtra("message")
-						viewModel.txnResult.value = "Transaction successful " + message
+						val message = data?.getStringExtra("message")
+						viewModel.txnResult.value = "Transaction successful $message"
 					} // TODO - clear the form for next payment
 					Activity.RESULT_CANCELED -> {
-						val error = data!!.getStringExtra("error")
-						viewModel.txnResult.value = "Transaction cancelled " + error
+						val error = data?.getStringExtra("error")
+						viewModel.txnResult.value = "Transaction cancelled $error"
 					} // TODO - preserve form to retry?
 					else -> {
 						val error = activity?.intent?.extras?.getString(getString(R.string.extra_error))
