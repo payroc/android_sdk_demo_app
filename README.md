@@ -1,4 +1,4 @@
-# android_sdk_demo_app
+# Payroc Android SDK Demo App
 Application demonstrating / testing the mobile SDK functions. 
 
 This application is intended to give a baseline implementation for each of the individual functions that the [Payroc Mobile SDK](https://github.com/payroc/android_pos_sdk) offers. This is in an effort to offer a semi-integrated solution certified with TSYS or Vantiv respectively. 

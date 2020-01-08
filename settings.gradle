@@ -1,3 +1,1 @@
 include ':payroc-demo-app'
-include ':payroc-sdk'
-project(':payroc-sdk').projectDir = new File('/Users/prestonf/GitHub/Payroc/android_pos_sdk/payroc-sdk')

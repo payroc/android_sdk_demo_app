@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/android_sdk_demo_app.iml" filepath="$PROJECT_DIR$/android_sdk_demo_app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android_sdk_demo_app.iml" filepath="$PROJECT_DIR$/android_sdk_demo_app.iml" group="android_sdk_demo_app" />
       <module fileurl="file://$PROJECT_DIR$/payroc-demo-app/payroc-demo-app.iml" filepath="$PROJECT_DIR$/payroc-demo-app/payroc-demo-app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../android_pos_sdk/payroc-sdk/payroc-sdk.iml" filepath="$PROJECT_DIR$/../android_pos_sdk/payroc-sdk/payroc-sdk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/payroc_android_demo_app.iml" filepath="$PROJECT_DIR$/payroc_android_demo_app.iml" />
     </modules>
   </component>
 </project>
