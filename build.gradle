@@ -21,8 +21,8 @@ allprojects {
         jcenter()
         maven {
             credentials {
-                username = System.getenv("GPR_USER")
-                password = System.getenv("GPR_API_KEY")
+                username = String.valueOf(System.getenv("GPR_USER"))
+                password = String.valueOf(System.getenv("GPR_API_KEY"))
             }
             url "https://maven.pkg.github.com/payroc/mobile_sdks"
         }
