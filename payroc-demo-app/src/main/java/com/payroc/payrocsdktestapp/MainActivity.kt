@@ -145,7 +145,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
             }
             R.id.nav_history -> {
-                val intent = Intent(this, com.payroc.sdk.ui.history.HistoryActivity::class.java)
+                val intent = Intent(this, com.payroc.sdk.ui.history.HistoryPagingActivity::class.java)
                 startActivityForResult(intent, ActivityResultTypes.GET_HISTORY.ordinal)
             }
             R.id.signature_test -> {
