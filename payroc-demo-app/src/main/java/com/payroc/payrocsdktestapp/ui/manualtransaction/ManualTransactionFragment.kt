@@ -29,6 +29,7 @@ import com.payroc.sdk.models.LineItem
 import com.payroc.sdk.models.Transaction
 import com.payroc.sdk.models.validators.*
 import com.payroc.sdk.ui.paymentprocessing.PaymentProcessingActivity
+import com.payroc.sdk.ui.review.TxnReviewActivity
 import java.math.BigDecimal
 import kotlin.concurrent.thread
 
@@ -134,6 +135,20 @@ class ManualTransactionFragment : Fragment() {
 					}
 				}
 			}
+            ActivityResultTypes.TXN_REVIEW.ordinal -> {
+                when (resultCode) {
+                    Activity.RESULT_OK -> {
+                        val transaction :Transaction? = data?.getParcelableExtra(getString(R.string.extra_transaction))
+                        val intent = Intent(context, PaymentProcessingActivity::class.java)
+                        intent.putExtra(getString(R.string.extra_transaction), transaction)
+                        intent.putExtra(getString(R.string.extra_device), SupportedDevice.Manual.name)
+                        startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
+                    } else -> {
+                        val error = data?.getStringExtra(getString(R.string.extra_error))
+                        Toast.makeText(context, "$error", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
 		}
 	}
 
@@ -185,10 +200,12 @@ class ManualTransactionFragment : Fragment() {
 		transaction.cardAddress.postal = if (postal.text.isNotEmpty()) postal.text.toString() else "0"
 		transaction.cardData.cardName = cardType
 
-        val intent = Intent(context, PaymentProcessingActivity::class.java)
+        val intent = Intent(context, TxnReviewActivity::class.java)
         intent.putExtra(getString(R.string.extra_transaction), transaction)
-        intent.putExtra(getString(R.string.extra_device), SupportedDevice.Manual.name)
-        startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
+        intent.putExtra(getString(R.string.extra_tip_enabled), true)
+        intent.putExtra(getString(R.string.extra_tax_enabled), true)
+        transaction.taxPercent = BigDecimal(10)
+        startActivityForResult(intent, ActivityResultTypes.TXN_REVIEW.ordinal)
 	}
 
 }

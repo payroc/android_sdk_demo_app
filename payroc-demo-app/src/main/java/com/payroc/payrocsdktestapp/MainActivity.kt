@@ -111,6 +111,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_numpad -> {
                 val intent = Intent(this, NumberPadActivity::class.java)
                 intent.putExtra(getString(R.string.extra_tax_enabled), true)
+                intent.putExtra(getString(R.string.extra_tip_enabled), true)
                 intent.putExtra(getString(R.string.extra_tax_percent), "6.5")
                 startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
             }
@@ -156,10 +157,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivityForResult(intent, ActivityResultTypes.GET_SIGNATURE.ordinal)
             }
             R.id.txn_review_test -> {
-                val lineItems = LineItem(BigDecimal.TEN)
-                val transaction = Transaction(arrayListOf(lineItems))
+                val transaction = Transaction(arrayListOf())
+                transaction.lineItems.add(LineItem(BigDecimal.TEN, "Meat"))
+                transaction.lineItems.add(LineItem(BigDecimal.TEN, "Fish"))
+                transaction.lineItems.add(LineItem(BigDecimal(3)))
+                transaction.lineItems.add(LineItem(BigDecimal(23)))
+                transaction.taxPercent = BigDecimal(5)
                 val intent = Intent(this, TxnReviewActivity::class.java)
                 intent.putExtra(getString(R.string.extra_transaction), transaction)
+                intent.putExtra(getString(R.string.extra_tax_enabled), true)
+                intent.putExtra(getString(R.string.extra_tip_enabled), true)
                 startActivityForResult(intent, ActivityResultTypes.TXN_REVIEW.ordinal)
             }
             R.id.email_test -> {
