@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent">
+
+    <EditText
+            android:id="@+id/txnAmount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:hint="@string/zero_dollars"
+            android:inputType="numberDecimal"
+            android:textAlignment="textStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" android:importantForAutofill="no"/>
+    <ImageView
+            android:layout_width="40dp"
+            android:layout_height="30dp" app:srcCompat="@drawable/ic_card_default"
+            android:id="@+id/cardTypeImage"
+            app:layout_constraintBottom_toBottomOf="@+id/cardNumber"
+            app:layout_constraintTop_toTopOf="@+id/cardNumber" app:layout_constraintStart_toStartOf="@+id/txnAmount"
+            android:layout_marginStart="8dp" android:contentDescription="Card Type Image"/>
+    <EditText
+            android:id="@+id/cardNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="@string/txn_card_number"
+            android:inputType="numberSigned"
+            android:singleLine="true"
+            app:layout_constraintEnd_toEndOf="@+id/txnAmount"
+            app:layout_constraintTop_toBottomOf="@+id/txnAmount" android:importantForAutofill="no"
+            app:layout_constraintStart_toEndOf="@+id/cardTypeImage" android:layout_marginStart="8dp"/>
+
+    <EditText
+            android:id="@+id/expDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/txn_mm_yy"
+            android:inputType="date"
+            android:singleLine="true"
+            app:layout_constraintEnd_toStartOf="@+id/cvvNum"
+            app:layout_constraintStart_toStartOf="@+id/txnAmount"
+            app:layout_constraintTop_toTopOf="@+id/cvvNum" android:importantForAutofill="no"
+    />
+
+    <EditText
+            android:id="@+id/cvvNum"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:hint="@string/txn_card_cvv"
+            android:inputType="numberSigned"
+            android:singleLine="true"
+            app:layout_constraintEnd_toStartOf="@+id/postal"
+            app:layout_constraintStart_toEndOf="@+id/expDate"
+            app:layout_constraintTop_toBottomOf="@+id/cardNumber" android:importantForAutofill="no"/>
+
+    <EditText
+            android:id="@+id/postal"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:ems="10"
+            android:hint="@string/txn_card_zip"
+            android:inputType="numberSigned"
+            android:singleLine="true"
+            app:layout_constraintEnd_toEndOf="@+id/cardNumber"
+            app:layout_constraintStart_toEndOf="@+id/cvvNum"
+            app:layout_constraintTop_toTopOf="@+id/cvvNum" android:importantForAutofill="no"/>
+
+    <Button
+            android:text="@string/txn_button_pay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/submitManualTxn"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/cvvNum"
+            app:layout_constraintStart_toStartOf="@+id/expDate"
+            app:layout_constraintEnd_toEndOf="@+id/postal"
+    />
+    <TextView
+            android:text="Result"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/manualResultTitle" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/submitManualTxn"
+            app:layout_constraintStart_toStartOf="@+id/submitManualTxn"
+            app:layout_constraintEnd_toEndOf="@+id/submitManualTxn"/>
+    <TextView
+        android:id="@+id/manualResultBody"
+        android:layout_width="0dp"
+        android:layout_height="0dp" android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/manualResultTitle"
+        app:layout_constraintStart_toStartOf="@+id/manualResultTitle"
+        app:layout_constraintTop_toBottomOf="@+id/manualResultTitle"
+    />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

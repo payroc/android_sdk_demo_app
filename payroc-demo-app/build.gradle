@@ -1,0 +1,118 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'io.fabric'
+    id 'com.google.gms.google-services'
+    id 'jacoco'
+}
+
+
+jacoco {
+    toolVersion = "0.8.4"
+}
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+}
+
+def coverageSourceDirs = [
+    "src/main/java"
+]
+
+def fileFilter = [
+    '**/R.class',
+    '**/R$*.class',
+    '**/*$ViewInjector*.*',
+    '**/*$ViewBinder*.*',
+    '**/BuildConfig.*',
+    '**/Manifest*.*'
+]
+
+def javaClasses = fileTree(
+    dir: "${buildDir}/intermediates/classes/debug",
+    excludes: fileFilter
+)
+def kotlinClasses = fileTree(
+    dir: "${buildDir}/tmp/kotlin-classes/debug",
+    excludes: fileFilter
+)
+
+task jacocoFullTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
+    classDirectories.from = files([javaClasses], [kotlinClasses])
+    additionalSourceDirs.from = files(coverageSourceDirs)
+    sourceDirectories.from = files(coverageSourceDirs)
+    executionData.from = fileTree(dir: "${buildDir}", includes: [
+        "jacoco/testDebugUnitTest.exec",
+        "outputs/code_coverage/debugAndroidTest/connected/*coverage.ec"
+    ])
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}
+
+task jacocoUnitTestReport(type: JacocoReport, dependsOn: ['test']) {
+    classDirectories.from = files([javaClasses], [kotlinClasses])
+    additionalSourceDirs.from = files(coverageSourceDirs)
+    sourceDirectories.from = files(coverageSourceDirs)
+    executionData.from = fileTree(dir: "${buildDir}", includes: [
+        "jacoco/testDebugUnitTest.exec",
+        "outputs/code_coverage/debugAndroidTest/connected/*coverage.ec"
+    ])
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId "com.payroc.payrocsdktestapp"
+        minSdkVersion 19
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.3.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+        debug {
+            signingConfig signingConfigs.debug
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation('com.crashlytics.sdk.android:crashlytics:2.10.1@aar') {
+        transitive = true
+    }
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'com.google.firebase:firebase-core:17.2.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation('com.payroc.android.pos:payroc-sdk:1.0.0@aar'){
+        transitive =true
+    }
+}

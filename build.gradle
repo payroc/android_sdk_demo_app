@@ -1,0 +1,48 @@
+buildscript {
+    ext.kotlin_version = '1.3.61'
+    ext.dokka_version = '0.9.17'
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://maven.fabric.io/public' }
+    }
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.30.0'
+        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:${dokka_version}"
+        classpath 'com.google.gms:google-services:4.3.3'
+        classpath 'org.jacoco:org.jacoco.core:0.8.4'
+    }
+}
+
+def githubProperties = new Properties()
+try {
+    githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
+} catch (ignored) {
+
+}
+
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven {
+            credentials {
+                /** Create github.properties in root project folder file with
+                 ** gpr.usr=GITHUB_USER_ID & gpr.key=PERSONAL_ACCESS_TOKEN
+                 ** Set env variable GPR_USER & GPR_API_KEY if not adding a properties file**/
+                username = githubProperties['gpr.usr'] ?: String.valueOf(System.getenv("GPR_USER"))
+                password = githubProperties['gpr.key'] ?: String.valueOf(System.getenv("GPR_API_KEY"))
+            }
+            url "https://maven.pkg.github.com/payroc/mobile_sdks"
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+

@@ -1,0 +1,2 @@
+include ':payroc-demo-app'
+rootProject.name='Payroc POS SDK Demo App'
