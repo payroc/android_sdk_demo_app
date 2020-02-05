@@ -17,6 +17,7 @@ import com.payroc.sdk.PLog
 import com.payroc.sdk.PayrocSdk
 import com.payroc.sdk.enums.ActivityResultTypes
 import com.payroc.sdk.enums.SdkResponseCode
+import com.payroc.sdk.enums.SupportedDevice
 import com.payroc.sdk.enums.TxnModes
 import com.payroc.sdk.models.LineItem
 import com.payroc.sdk.models.PayrocSdkTxnResponse
@@ -133,8 +134,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
             }
             R.id.nav_manual -> {
-                val intent = Intent(this, TransactionActivity::class.java)
-                intent.putExtra("mode", TxnModes.MANUAL.name)
+                val intent = Intent(this, NumberPadActivity::class.java)
+                intent.putExtra(getString(R.string.extra_device), SupportedDevice.Manual.name)
                 startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
             }
 //            R.id.nav_ingest -> {
