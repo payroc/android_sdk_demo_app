@@ -25,25 +25,40 @@
             tools:text="@={ viewModel.apiUsername }"/>
 
     <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:id="@+id/apiPassword"
-            app:layout_constraintStart_toStartOf="@+id/apiUsername"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/apiUsername"
-            android:hint="@string/api_password"
-            android:importantForAutofill="no"
-            app:layout_constraintTop_toBottomOf="@+id/apiUsername"/>
+        android:id="@+id/apiPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/api_password"
+        android:importantForAutofill="no"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/apiUsername"
+        app:layout_constraintStart_toStartOf="@+id/apiUsername"
+        app:layout_constraintTop_toBottomOf="@+id/apiUsername" />
+
+    <EditText
+        android:id="@+id/gatewayId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/gateway_id"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/apiUsername"
+        app:layout_constraintStart_toStartOf="@+id/apiUsername"
+        app:layout_constraintTop_toBottomOf="@+id/apiPassword" />
+
     <Spinner
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/settingsGatewaySpinner" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/apiPassword"
-            app:layout_constraintStart_toStartOf="@+id/apiPassword"
-            app:layout_constraintEnd_toEndOf="@+id/apiPassword"
-            android:spinnerMode="dialog"/>
+        android:id="@+id/settingsGatewaySpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintEnd_toEndOf="@+id/apiPassword"
+        app:layout_constraintStart_toStartOf="@+id/apiPassword"
+        app:layout_constraintTop_toBottomOf="@+id/gatewayId" />
     <Spinner
             android:layout_width="0dp"
             android:layout_height="wrap_content"
