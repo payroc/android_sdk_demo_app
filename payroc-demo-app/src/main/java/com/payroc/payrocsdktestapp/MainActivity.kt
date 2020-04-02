@@ -19,6 +19,7 @@ import com.payroc.sdk.enums.ActivityResultTypes
 import com.payroc.sdk.enums.SdkResponseCode
 import com.payroc.sdk.enums.SupportedDevice
 import com.payroc.sdk.enums.TxnModes
+import com.payroc.sdk.helpers.PrefHelper
 import com.payroc.sdk.models.LineItem
 import com.payroc.sdk.models.PayrocSdkTxnResponse
 import com.payroc.sdk.models.Transaction
@@ -80,6 +81,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
         }
         nav_view.setNavigationItemSelectedListener(this)
+        val editor = PrefHelper.getPrefs(this).edit()
+        editor.putBoolean(PrefHelper.IS_WAIT_TO_REMOVE_CARD, true)
+        editor.putBoolean(PrefHelper.IS_SURCHARGE_ENABLED, true)
+        editor.commit()
+        PayrocSdk.merchantSettings.is_wait_to_remove_card = PrefHelper.getPrefs(this).getBoolean(PrefHelper.IS_WAIT_TO_REMOVE_CARD, true)
+        PayrocSdk.merchantSettings.getSurchargeInfo(this)
     }
 
     override fun onBackPressed() {
