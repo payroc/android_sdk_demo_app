@@ -145,3 +145,4 @@ fabric.properties
 # keystore file - saved in password manager.
 /payroc_android
 /github.properties
+/payroc-demo-app/release/payroc-demo-app-release.aab
