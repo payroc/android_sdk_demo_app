@@ -13,11 +13,11 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import com.payroc.payrocsdktestapp.R
-import com.payroc.sdk.enums.ActivityResultTypes
-import com.payroc.sdk.enums.SupportedDevice
-import com.payroc.sdk.models.LineItem
-import com.payroc.sdk.models.Transaction
-import com.payroc.sdk.models.validators.TxnAmount
+import com.payroc.core.enums.ActivityResultTypes
+import com.payroc.core.enums.SupportedDevice
+import com.payroc.core.models.LineItem
+import com.payroc.core.models.Transaction
+import com.payroc.core.models.validators.TxnAmount
 import com.payroc.sdk.ui.paymentprocessing.PaymentProcessingActivity
 import java.math.BigDecimal
 

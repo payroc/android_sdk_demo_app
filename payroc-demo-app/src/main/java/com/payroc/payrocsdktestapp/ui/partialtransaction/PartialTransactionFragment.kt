@@ -14,8 +14,8 @@ import android.widget.EditText
 import android.widget.Toast
 import com.payroc.payrocsdktestapp.R
 import com.payroc.payrocsdktestapp.ui.emvtransaction.PartialTransactionViewModel
-import com.payroc.sdk.enums.ActivityResultTypes
-import com.payroc.sdk.models.validators.TxnAmount
+import com.payroc.core.enums.ActivityResultTypes
+import com.payroc.core.models.validators.TxnAmount
 import com.payroc.sdk.ui.multipart_payment.PartialPaymentActivity
 
 class PartialTransactionFragment : Fragment() {
