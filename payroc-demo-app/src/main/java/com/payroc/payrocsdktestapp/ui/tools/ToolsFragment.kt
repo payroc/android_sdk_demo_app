@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.payroc.payrocsdktestapp.R
-import com.payroc.core.PLog
+import com.payroc.android_core.PLog
 
 class ToolsFragment : Fragment() {
 

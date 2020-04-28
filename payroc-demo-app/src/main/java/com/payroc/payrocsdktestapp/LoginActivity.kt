@@ -23,7 +23,7 @@ import android.widget.TextView
 
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
-import com.payroc.core.models.validators.EmailAddress
+import com.payroc.android_core.models.validators.EmailAddress
 
 import kotlinx.android.synthetic.main.activity_login.*
 

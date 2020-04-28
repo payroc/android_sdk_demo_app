@@ -19,9 +19,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.payroc.payrocsdktestapp.BuildConfig
 import com.payroc.payrocsdktestapp.R
-import com.payroc.core.PLog
-import com.payroc.core.enums.Environment
-import com.payroc.core.enums.Gateways
+import com.payroc.android_core.PLog
+import com.payroc.android_core.enums.Environment
+import com.payroc.android_core.enums.Gateways
 import stringLiveData
 
 class SettingsFragment : Fragment() {
