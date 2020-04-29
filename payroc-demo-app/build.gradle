@@ -114,7 +114,11 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
     implementation('com.payroc.android.pos:payroc-sdk:1.1.2@aar'){
         transitive =true
     }
+//    implementation project(':payroc-sdk')
+    implementation project(':payroc-core')
 }
