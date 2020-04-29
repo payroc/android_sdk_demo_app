@@ -17,11 +17,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.payroc.android_core.PLog
+import com.payroc.android_core.enums.Environment
+import com.payroc.android_core.enums.Gateways
 import com.payroc.payrocsdktestapp.BuildConfig
 import com.payroc.payrocsdktestapp.R
-import com.payroc.sdk.PLog
-import com.payroc.sdk.enums.Environment
-import com.payroc.sdk.enums.Gateways
 import stringLiveData
 
 class SettingsFragment : Fragment() {
@@ -80,7 +80,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setupFieldObserver(prefKey: String, modelField: MutableLiveData<String>, uiField: EditText){
-        prefs.stringLiveData(prefKey, "").observe(this, Observer<String> { string ->
+        prefs.stringLiveData(prefKey, "").observe(viewLifecycleOwner, Observer<String> { string ->
             modelField.value = string
         })
         modelField.value = prefs.getString(prefKey, "")

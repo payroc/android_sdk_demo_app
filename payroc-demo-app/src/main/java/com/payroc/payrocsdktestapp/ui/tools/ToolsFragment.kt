@@ -1,14 +1,14 @@
 package com.payroc.payrocsdktestapp.ui.tools
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.appcompat.widget.AppCompatButton
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatButton
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
+import com.payroc.android_core.PLog
 import com.payroc.payrocsdktestapp.R
-import com.payroc.sdk.PLog
 
 class ToolsFragment : Fragment() {
 

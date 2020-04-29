@@ -117,4 +117,6 @@ dependencies {
     implementation('com.payroc.android.pos:payroc-sdk:1.2.0@aar'){
         transitive =true
     }
+//    implementation project(':payroc-sdk')
+    implementation project(':payroc-core')
 }

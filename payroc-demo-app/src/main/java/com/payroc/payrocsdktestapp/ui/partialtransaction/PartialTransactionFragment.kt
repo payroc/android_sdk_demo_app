@@ -2,20 +2,20 @@ package com.payroc.payrocsdktestapp.ui.partialtransaction
 
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.appcompat.widget.AppCompatButton
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatButton
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
+import com.payroc.android_core.enums.ActivityResultTypes
+import com.payroc.android_core.models.validators.TxnAmount
 import com.payroc.payrocsdktestapp.R
 import com.payroc.payrocsdktestapp.ui.emvtransaction.PartialTransactionViewModel
-import com.payroc.sdk.enums.ActivityResultTypes
-import com.payroc.sdk.models.validators.TxnAmount
 import com.payroc.sdk.ui.multipart_payment.PartialPaymentActivity
 
 class PartialTransactionFragment : Fragment() {
