@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SDK Demo</string>
+    <string name="navigation_drawer_open">Abrir el cajón de navegación</string>
+    <string name="navigation_drawer_close">Cerrar el cajón de navegación</string>
+    <string name="nav_header_title">Desarrollo Payroc</string>
+    <string name="nav_header_desc">Encabezado de navegación</string>
+    <string name="action_settings">Configuraciones</string>
+    <string name="email_support">Soporte de correo electrónico</string>
+    <string name="call_support">Llamar a soporte</string>
+    <string name="title_activity_login">Registrarse</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Contraseña (opcional)</string>
+    <string name="action_sign_in">Ingresa o Registro</string>
+    <string name="action_sign_in_short">Registrarse</string>
+    <string name="permission_rationale">Se necesitan permisos de contactos para proporcionar compleciones de correo electrónico.</string>
+    <string name="nuke_stored_settings">Configuración almacenada de Nuke</string>
+    <string name="payment_processing">Procesando pago</string>
+    <string name="manual_pay">Pago manual</string>
+    <string name="partial_pay">Pago parcial</string>
+    <string name="emv_contactless">EMV / Contactless</string>
+    <string name="extras">Extras</string>
+    <string name="settings_page_tools">Herramientas de la página de configuración</string>
+    <string name="ingest_transaction">Transacción de ingesta</string>
+    <string name="multi_line_transaction">Transacción multilínea</string>
+    <string name="transaction_history">Historial de transacciones</string>
+    <string name="nav_inventory_transaction">Transacción de inventario</string>
+    <string name="api_username">Nombre de usuario de la API</string>
+    <string name="api_password">Contraseña de la API</string>
+    <string name="signature_test">Prueba de firma</string>
+    <string name="email_test">Prueba de correo electrónico</string>
+    <string name="tip_test">Prueba de punta</string>
+    <string name="transaction_review_test">Prueba de revisión de transacciones</string>
+    <string name="pay_view">Vista de pago</string>
+    <string name="main_activity_title">Aplicación de demostración Payroc SDK</string>
+    <string name="gateway_id">ID de puerta de enlace</string>
+</resources>
