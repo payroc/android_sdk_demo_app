@@ -14,13 +14,11 @@ import com.crashlytics.android.Crashlytics
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.payroc.android_core.PLog
-import com.payroc.android_core.enums.ActivityResultTypes
-import com.payroc.android_core.enums.SdkResponseCode
-import com.payroc.android_core.enums.SupportedDevice
-import com.payroc.android_core.enums.TxnModes
+import com.payroc.android_core.enums.*
 import com.payroc.android_core.helpers.PrefHelper
 import com.payroc.android_core.models.LineItem
 import com.payroc.android_core.models.Transaction
+import com.payroc.payrocsdktestapp.ui.permissions.PermissionsActivity
 import com.payroc.sdk.PayrocSdk
 import com.payroc.sdk.models.PayrocSdkTxnResponse
 import com.payroc.sdk.models.TransactionBatch.CREATOR.isExistUnCompleteBatch
@@ -87,6 +85,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         editor.commit()
         PayrocSdk.merchantSettings.is_wait_to_remove_card = PrefHelper.getPrefs(this).getBoolean(PrefHelper.IS_WAIT_TO_REMOVE_CARD, true)
         PayrocSdk.merchantSettings.getSurchargeInfo(this)
+        PayrocSdk.permissions.updateFromPrefs(this)
     }
 
     override fun onBackPressed() {
@@ -163,6 +162,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_history -> {
                 val intent = Intent(this, com.payroc.sdk.ui.history.HistoryActivity::class.java)
                 startActivityForResult(intent, ActivityResultTypes.GET_HISTORY.ordinal)
+            }
+            R.id.nav_permissions -> {
+                val intent = Intent(this, PermissionsActivity::class.java)
+                startActivity(intent)
             }
             R.id.signature_test -> {
                 val lineItems = LineItem(BigDecimal.TEN)

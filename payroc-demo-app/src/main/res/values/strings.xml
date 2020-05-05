@@ -34,6 +34,12 @@
     <string name="multi_line_transaction">Multi Line Transaction</string>
     <string name="transaction_history">Transaction History</string>
     <string name="nav_inventory_transaction">Inventory Transaction</string>
+    <string name="nav_permissions">Permissions</string>
+    <string name="enable_transaction">Enable Transaction</string>
+    <string name="enable_history">Enable History</string>
+    <string name="enable_resending_receipts">Enable Resending Receipts</string>
+    <string name="enable_refund">Enable Refund</string>
+    <string name="enable_void">Enable Void</string>
 
     <string name="api_username">Api Username</string>
     <string name="api_password">Api Password</string>

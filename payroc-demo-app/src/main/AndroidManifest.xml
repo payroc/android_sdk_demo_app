@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.payroc.payrocsdktestapp">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.payroc.payrocsdktestapp">
 
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
@@ -20,7 +21,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
-            android:name="androidx.multidex.MultiDexApplication">
+            android:name="androidx.multidex.MultiDexApplication"
+            tools:replace="android:allowBackup">
 
         <activity
                 android:name=".LoginActivity"
@@ -53,6 +55,7 @@
         <activity android:name=".InventoryActivity"/>
         <activity android:name=".ToolsActivity"/>
         <activity android:name=".SettingsActivity"/>
+        <activity android:name=".ui.permissions.PermissionsActivity" />
     </application>
 
 </manifest>
