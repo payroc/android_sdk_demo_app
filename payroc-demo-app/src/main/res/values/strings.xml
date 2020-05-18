@@ -50,4 +50,6 @@
     <string name="pay_view">Pay View</string>
     <string name="main_activity_title">Payroc SDK Demo App</string>
     <string name="gateway_id">Gateway ID</string>
+    <string name="status_view_test">Status View Test</string>
+    <string name="transaction_status">Transaction Status</string>
 </resources>

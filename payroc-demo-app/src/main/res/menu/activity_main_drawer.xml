@@ -59,6 +59,10 @@
                 android:icon="@drawable/ic_check_capture_outline"
                 android:title="@string/tip_test" />
             <item
+                android:id="@+id/nav_status_view_test"
+                android:icon="@drawable/ic_check_capture_outline"
+                android:title="@string/status_view_test" />
+            <item
                 android:id="@+id/nav_settings_tools"
                 android:icon="@drawable/ic_menu_manage"
                 android:title="@string/settings_page_tools" />

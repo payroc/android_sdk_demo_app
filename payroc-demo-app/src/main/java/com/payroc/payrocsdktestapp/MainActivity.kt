@@ -19,6 +19,7 @@ import com.payroc.android_core.helpers.PrefHelper
 import com.payroc.android_core.models.LineItem
 import com.payroc.android_core.models.Transaction
 import com.payroc.payrocsdktestapp.ui.permissions.PermissionsActivity
+import com.payroc.payrocsdktestapp.ui.statusview.StatusViewActivity
 import com.payroc.sdk.PayrocSdk
 import com.payroc.sdk.models.PayrocSdkTxnResponse
 import com.payroc.sdk.models.TransactionBatch.CREATOR.isExistUnCompleteBatch
@@ -197,6 +198,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val intent = Intent(this, TipActivity::class.java)
                 intent.putExtra(getString(R.string.extra_transaction), transaction)
                 startActivityForResult(intent, ActivityResultTypes.GET_TIP.ordinal)
+            }
+            R.id.nav_status_view_test -> {
+                val intent = Intent(this, StatusViewActivity::class.java)
+                startActivity(intent)
             }
             R.id.nav_settings_tools -> {
                 val intent = Intent(this, ToolsActivity::class.java)
