@@ -24,3 +24,13 @@ jobs:
             - Placeholder
           draft: false
           prerelease: false
+      - name: Send a message to Microsoft Teams
+        uses: aliencube/microsoft-teams-actions@v0.8.0
+        with:
+          webhook_uri: https://outlook.office.com/webhook/009b32e6-e87e-411e-a931-99bbbbce6b6f@64b61d8a-7228-432e-8366-af4e7fc1c13e/IncomingWebhook/754f6dd1b35e451aabc5bdd8a5cb251d/e470edfb-193b-405e-9e42-1efa288eab71
+          title: Android SDK Demo App Release
+          summary: A new release is available for the Android SDK Demo App. 
+          text: Hello World!
+          theme_color: <Message Theme Color>
+          sections: '[{ "activityTitle": "hello world" }]'
+          actions: '[{ "@type": "OpenUri", "name": "lorem ipsum", "targets": [{ "os": "default", "uri": "https://localhost" }] }]'
