@@ -56,6 +56,7 @@
         <activity android:name=".ToolsActivity"/>
         <activity android:name=".SettingsActivity"/>
         <activity android:name=".ui.permissions.PermissionsActivity" />
+        <activity android:name=".ui.statusview.StatusViewActivity" />
     </application>
 
 </manifest>
