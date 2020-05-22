@@ -36,6 +36,10 @@
                 android:id="@+id/nav_emv"
                 android:icon="@drawable/ic_nav_card_outline"
                 android:title="@string/emv_contactless" />
+            <item
+                android:id="@+id/nav_capture_all"
+                android:icon="@drawable/ic_nav_card_outline"
+                android:title="@string/capture_all" />
         </menu>
     </item>
 
