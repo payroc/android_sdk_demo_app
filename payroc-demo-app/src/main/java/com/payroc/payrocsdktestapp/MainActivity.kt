@@ -6,18 +6,22 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import com.crashlytics.android.Crashlytics
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.payroc.android_core.PLog
 import com.payroc.android_core.enums.*
 import com.payroc.android_core.helpers.PrefHelper
+import com.payroc.android_core.interfaces.GatewayCallback
 import com.payroc.android_core.models.LineItem
 import com.payroc.android_core.models.Transaction
+import com.payroc.android_core.models.ibx.response.PaymentCardResponse
 import com.payroc.payrocsdktestapp.ui.permissions.PermissionsActivity
 import com.payroc.payrocsdktestapp.ui.statusview.StatusViewActivity
 import com.payroc.sdk.PayrocSdk
@@ -41,6 +45,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private var mFirebaseAnalytics: FirebaseAnalytics? = null
+    private lateinit var mainView: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +53,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         setContentView(R.layout.activity_main)
+        mainView = findViewById(R.id.main_content)
 
 //        if (savedInstanceState == null) {
 //            supportFragmentManager.beginTransaction()
@@ -82,7 +88,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
         val editor = PrefHelper.getPrefs(this).edit()
         editor.putBoolean(PrefHelper.IS_WAIT_TO_REMOVE_CARD, true)
-        editor.putBoolean(PrefHelper.IS_SURCHARGE_ENABLED, true)
+        editor.putBoolean(PrefHelper.IS_SURCHARGE_ENABLED, false)
         editor.commit()
         PayrocSdk.merchantSettings.is_wait_to_remove_card = PrefHelper.getPrefs(this).getBoolean(PrefHelper.IS_WAIT_TO_REMOVE_CARD, true)
         PayrocSdk.merchantSettings.getSurchargeInfo(this)
@@ -139,6 +145,29 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val intent = Intent(this, TransactionActivity::class.java)
                 intent.putExtra("mode", TxnModes.EMV.name)
                 startActivityForResult(intent, ActivityResultTypes.CREATE_TXN.ordinal)
+            }
+            R.id.nav_capture_all -> {
+                val payrocSdk = PayrocSdk()
+                payrocSdk.setGatewayFromPreferences(this)
+                val callbacks = object : GatewayCallback {
+                    override fun gatewayCallbackTxnApproved(response: PaymentCardResponse) {
+                        Snackbar.make(mainView, R.string.approved, Snackbar.LENGTH_LONG).show()
+                    }
+
+                    override fun gatewayCallbackTxnDeclined(response: PaymentCardResponse) {
+                        Snackbar.make(mainView, R.string.declined, Snackbar.LENGTH_LONG).show()
+                    }
+
+                    override fun gatewayCallbackTxnTimeout(response: PaymentCardResponse) {
+                        Snackbar.make(mainView, R.string.time_out, Snackbar.LENGTH_LONG).show()
+                    }
+
+                    override fun gatewayCallbackUnauthorized() {
+                        Snackbar.make(mainView, R.string.please_wait, Snackbar.LENGTH_INDEFINITE).show()
+                    }
+                }
+                Snackbar.make(mainView, R.string.please_wait, Snackbar.LENGTH_INDEFINITE).show()
+                payrocSdk.activeGateway.captureAllTxn(callbacks, payrocSdk.activeAuth)
             }
             R.id.nav_manual -> {
                 val intent = Intent(this, NumberPadActivity::class.java)

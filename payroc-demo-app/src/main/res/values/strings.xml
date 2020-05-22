@@ -52,4 +52,6 @@
     <string name="gateway_id">Gateway ID</string>
     <string name="status_view_test">Status View Test</string>
     <string name="transaction_status">Transaction Status</string>
+    <string name="capture_all">Capture All</string>
+    <string name="time_out">Time out</string>
 </resources>
