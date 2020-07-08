@@ -43,6 +43,7 @@
 
     <string name="api_username">Api Username</string>
     <string name="api_password">Api Password</string>
+    <string name="api_key">Api Key</string>
     <string name="signature_test">Signature Test</string>
     <string name="email_test">Email Test</string>
     <string name="tip_test">Tip Test</string>

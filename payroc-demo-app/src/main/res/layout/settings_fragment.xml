@@ -41,6 +41,19 @@
             app:layout_constraintTop_toBottomOf="@+id/apiUsername" />
 
         <EditText
+            android:id="@+id/apiKey"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="@string/api_key"
+            android:importantForAutofill="no"
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="@+id/apiUsername"
+            app:layout_constraintStart_toStartOf="@+id/apiUsername"
+            app:layout_constraintTop_toBottomOf="@+id/apiPassword" />
+
+        <EditText
             android:id="@+id/gatewayId"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -51,7 +64,7 @@
             android:inputType="number"
             app:layout_constraintEnd_toEndOf="@+id/apiUsername"
             app:layout_constraintStart_toStartOf="@+id/apiUsername"
-            app:layout_constraintTop_toBottomOf="@+id/apiPassword" />
+            app:layout_constraintTop_toBottomOf="@+id/apiKey" />
 
         <Spinner
             android:id="@+id/settingsGatewaySpinner"
