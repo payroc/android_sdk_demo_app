@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         setContentView(R.layout.activity_main)
         mainView = findViewById(R.id.main_content)
+        PayrocSdk.layoutCheck(this)
 
 //        if (savedInstanceState == null) {
 //            supportFragmentManager.beginTransaction()
@@ -167,7 +168,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     }
                 }
                 Snackbar.make(mainView, R.string.please_wait, Snackbar.LENGTH_INDEFINITE).show()
-                payrocSdk.activeGateway.captureAllTxn(callbacks, payrocSdk.activeAuth)
+                payrocSdk.activeGateway.closeBatch(callbacks, payrocSdk.activeAuth)
             }
             R.id.nav_manual -> {
                 val intent = Intent(this, NumberPadActivity::class.java)

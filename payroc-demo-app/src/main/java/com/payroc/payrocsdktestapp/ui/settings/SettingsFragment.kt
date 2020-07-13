@@ -35,6 +35,7 @@ class SettingsFragment : Fragment() {
     private lateinit var prefs: SharedPreferences
     private lateinit var apiUsername: EditText
     private lateinit var apiPassword: EditText
+    private lateinit var apiKey: EditText
     private lateinit var gatewayId: EditText
     private lateinit var environmentSpinner: Spinner
     private lateinit var gatewaySpinner: Spinner
@@ -49,6 +50,7 @@ class SettingsFragment : Fragment() {
         // TODO - validate the username and password at some point.
         apiUsername = view.findViewById(R.id.apiUsername)
         apiPassword = view.findViewById(R.id.apiPassword)
+        apiKey = view.findViewById(R.id.apiKey)
         gatewayId = view.findViewById(R.id.gatewayId)
         environmentSpinner = view.findViewById(R.id.settingsEnvironmentSpinner)
         environmentSpinner.adapter = ArrayAdapter<Environment>(context!!, R.layout.support_simple_spinner_dropdown_item, Environment.values())
@@ -69,6 +71,7 @@ class SettingsFragment : Fragment() {
 
         setupFieldObserver(getString(com.payroc.sdk.R.string.shared_prefs_api_username_key), viewModel.apiUsername, apiUsername)
         setupFieldObserver(getString(com.payroc.sdk.R.string.shared_prefs_api_password_key), viewModel.apiPassword, apiPassword)
+        setupFieldObserver(getString(com.payroc.sdk.R.string.shared_prefs_api_key_key), viewModel.apiKey, apiKey)
         setupFieldObserver(getString(com.payroc.sdk.R.string.shared_prefs_gateway_id), viewModel.gatewayId, gatewayId)
         setupFieldObserver(getString(com.payroc.sdk.R.string.shared_prefs_api_environment_key), viewModel.apiEnvironment, environmentSpinner)
         setupFieldObserver(getString(com.payroc.sdk.R.string.shared_prefs_api_gateway_key), viewModel.apiGateway, gatewaySpinner)
@@ -90,6 +93,7 @@ class SettingsFragment : Fragment() {
     private fun updateCredentials(){
         prefs.edit().putString(getString(com.payroc.sdk.R.string.shared_prefs_api_username_key), apiUsername.text.toString()).apply()
         prefs.edit().putString(getString(com.payroc.sdk.R.string.shared_prefs_api_password_key), apiPassword.text.toString()).apply()
+        prefs.edit().putString(getString(com.payroc.sdk.R.string.shared_prefs_api_key_key), apiKey.text.toString()).apply()
         prefs.edit().putString(getString(com.payroc.sdk.R.string.shared_prefs_gateway_id), gatewayId.text.toString()).apply()
         prefs.edit().putInt(getString(com.payroc.sdk.R.string.shared_prefs_api_environment_key), environmentSpinner.selectedItemPosition).apply()
         prefs.edit().putInt(getString(com.payroc.sdk.R.string.shared_prefs_api_gateway_key), gatewaySpinner.selectedItemPosition).apply()
