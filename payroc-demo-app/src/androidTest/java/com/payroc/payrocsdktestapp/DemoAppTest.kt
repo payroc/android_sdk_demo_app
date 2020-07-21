@@ -2,6 +2,7 @@ package com.payroc.payrocsdktestapp
 
 import android.content.Context
 import android.view.Gravity
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
@@ -15,11 +16,6 @@ import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
-import com.payroc.sdk.BuildConfig
-import com.payroc.sdk.enums.Environment
-import com.payroc.sdk.enums.Gateways
-import com.payroc.sdk.enums.SupportedDevice
-import com.payroc.sdk.ui.history.HistoryItemViewHolder
 import org.hamcrest.Matchers.allOf
 import org.junit.After
 import org.junit.Assert.assertTrue
@@ -59,10 +55,10 @@ class DemoAppTest {
         onView(withId(R.id.apiPassword)).perform(clearText()).perform(typeText(API_PASSWORD))
         onView(withId(R.id.gatewayId)).perform(clearText()).perform(typeText(GATEWAY_ID))
         onView(withId(R.id.settingsGatewaySpinner)).perform(click())
-        onView(withText(Gateways.IBX.name)).perform(click())
+        onView(withText("IBX")).perform(click())
         onView(withId(R.id.settingsEnvironmentSpinner)).perform(click())
-        onView(withText(Environment.Stage.name)).perform(click())
-        onView(withId(R.id.saveApiSettings)).perform(click())
+        onView(withText("Stage")).perform(click())
+        onView(withId(R.id.saveApiSettings)).perform(scrollTo(), click())
 
         onView(withId(R.id.fab)).perform(click())
         onView(withId(R.id.numpadAmount)).check(matches(isDisplayed()))
@@ -150,7 +146,7 @@ class DemoAppTest {
         //History
         navigateTo(R.id.nav_history)
         waitComponent(onView(getElementFromMatchAtPosition(withText("$1.00"), 0)))
-        onView(withId(R.id.recycler)).perform(actionOnItemAtPosition<HistoryItemViewHolder>(0, click()))
+        onView(withId(R.id.recycler)).perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
         waitComponent(onView(withId(R.id.receipt_merchant_logo)))
         onView(withText("(1x$1.00)")).check(matches(isDisplayed()))
         Espresso.pressBack()
