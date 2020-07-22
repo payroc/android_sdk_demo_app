@@ -22,8 +22,7 @@ import com.payroc.android_core.enums.Environment
 import com.payroc.android_core.enums.Gateways
 import com.payroc.payrocsdktestapp.BuildConfig
 import com.payroc.payrocsdktestapp.R
-import stringLiveData
-
+import com.payroc.sdk.helpers.stringLiveData
 class SettingsFragment : Fragment() {
 
     companion object {
