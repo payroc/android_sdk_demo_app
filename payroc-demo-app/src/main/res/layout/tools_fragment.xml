@@ -31,4 +31,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintTop_toBottomOf="@+id/toolsEmailSupport"/>
 
+    <Switch
+        android:id="@+id/background_anim_switch"
+        style="@style/TextAppearance.AppCompat.Widget.Switch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/enable_background_anim"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolsCallSupport" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
