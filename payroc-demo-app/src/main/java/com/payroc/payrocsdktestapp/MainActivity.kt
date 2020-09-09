@@ -55,6 +55,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         mainView = findViewById(R.id.main_content)
         PayrocSdk.layoutCheck(this)
+        PayrocSdk.merchantSettings.enable_background_animations =
+            PrefHelper.getPrefs(this).getBoolean(getString(com.payroc.sdk.R.string.shared_prefs_background_animation_enabled), true)
 
 //        if (savedInstanceState == null) {
 //            supportFragmentManager.beginTransaction()

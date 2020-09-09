@@ -55,4 +55,6 @@
     <string name="transaction_status">Transaction Status</string>
     <string name="capture_all">Capture All</string>
     <string name="time_out">Time out</string>
+
+    <string name="enable_background_anim">Enable Background Animation</string>
 </resources>
