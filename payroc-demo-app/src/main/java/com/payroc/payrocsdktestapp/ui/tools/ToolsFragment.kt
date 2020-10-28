@@ -8,8 +8,10 @@ import android.widget.Switch
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.payroc.android_core.PLog
 import com.payroc.android_core.helpers.PrefHelper
+import com.payroc.payrocsdktestapp.FirebaseAnalyticsEvents
 import com.payroc.payrocsdktestapp.R
 import com.payroc.sdk.PayrocSdk
 
@@ -35,6 +37,7 @@ class ToolsFragment : Fragment() {
 
         val emailSupport = view.findViewById<AppCompatButton>(R.id.toolsEmailSupport)
         emailSupport.setOnClickListener {
+            FirebaseAnalytics.getInstance(it.context).logEvent(FirebaseAnalyticsEvents.TAP_CONTACT_US, null)
             viewModel.payrocSdk.emailSupport(view.context, "Test 123" ){ success, error ->
                 PLog.i(TAG, "Email result: $success \nMessage: $error")
             }
@@ -42,6 +45,7 @@ class ToolsFragment : Fragment() {
 
         val callSupport = view.findViewById<AppCompatButton>(R.id.toolsCallSupport)
         callSupport.setOnClickListener {
+            FirebaseAnalytics.getInstance(it.context).logEvent(FirebaseAnalyticsEvents.TAP_CONTACT_US, null)
             viewModel.payrocSdk.callSupport(view.context) { success, error ->
                 PLog.i(TAG, "Email result: $success \nMessage: $error")
             }
