@@ -141,6 +141,8 @@ fabric.properties
 
 # Editor-based Rest Client
 .idea/httpRequests
+.idea/markdown-navigator.xml
+.idea/markdown-navigator-enh.xml
 
 # keystore file - saved in password manager.
 /payroc_android

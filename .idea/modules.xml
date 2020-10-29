@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Payroc_POS_SDK_Demo_App.iml" filepath="$PROJECT_DIR$/.idea/modules/Payroc_POS_SDK_Demo_App.iml" group="Payroc_POS_SDK_Demo_App" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Payroc_POS_SDK_Demo_App.iml" filepath="$PROJECT_DIR$/.idea/modules/Payroc_POS_SDK_Demo_App.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/payroc-demo-app/Payroc_POS_SDK_Demo_App.payroc-demo-app.iml" filepath="$PROJECT_DIR$/.idea/modules/payroc-demo-app/Payroc_POS_SDK_Demo_App.payroc-demo-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/android_sdk_demo_app.iml" filepath="$PROJECT_DIR$/android_sdk_demo_app.iml" group="android_sdk_demo_app" />
       <module fileurl="file://$PROJECT_DIR$/../payroc_android_core/payroc_core/payroc-core.iml" filepath="$PROJECT_DIR$/../payroc_android_core/payroc_core/payroc-core.iml" group="Payroc POS SDK Demo App/payroc-core" />
       <module fileurl="file://$PROJECT_DIR$/payroc-demo-app/payroc-demo-app.iml" filepath="$PROJECT_DIR$/payroc-demo-app/payroc-demo-app.iml" group="Payroc POS SDK Demo App/payroc-demo-app" />
