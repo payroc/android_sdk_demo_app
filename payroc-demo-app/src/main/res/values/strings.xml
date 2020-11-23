@@ -57,4 +57,7 @@
     <string name="time_out">Time out</string>
 
     <string name="enable_background_anim">Enable Background Animation</string>
+    <string name="txn_type">%s Transaction</string>
+    <string name="module_tests">Module Tests</string>
+    <string name="txn_types">Txn Types</string>
 </resources>

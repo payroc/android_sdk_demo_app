@@ -22,6 +22,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import java.util.*
 
 
 class DemoAppTest {
@@ -47,6 +48,7 @@ class DemoAppTest {
     @Test
     fun paymentActivityTest() {
         //Intro
+        Locale.setDefault(Locale.US)
         waitComponent(onView(withText("Payroc SDK Demo App")))
         openActionBarOverflowOrOptionsMenu(context)
         onView(withText(R.string.action_settings)).perform(click())
