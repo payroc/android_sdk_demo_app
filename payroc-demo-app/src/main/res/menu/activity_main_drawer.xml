@@ -22,7 +22,7 @@
             android:title="@string/nav_permissions" />
     </group>
 
-    <item android:title="Txn Types">
+    <item android:title="@string/txn_types">
         <menu>
             <item
                 android:id="@+id/nav_partial"
@@ -44,7 +44,7 @@
     </item>
 
 
-    <item android:title="Module Tests">
+    <item android:title="@string/module_tests">
         <menu>
             <item
                 android:id="@+id/txn_review_test"

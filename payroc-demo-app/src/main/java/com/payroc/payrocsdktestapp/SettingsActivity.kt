@@ -9,7 +9,7 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        supportActionBar!!.title = "Settings"
+        supportActionBar!!.title = getString(R.string.action_settings)
 
         setContentView(R.layout.settings_activity)
         if (savedInstanceState == null) {

@@ -24,7 +24,7 @@ class TransactionActivity : AppCompatActivity() {
 		val intent = intent
 		val txnType = intent.getStringExtra("mode")
 
-		supportActionBar!!.title = "$txnType Transaction"
+		supportActionBar!!.title = getString(R.string.txn_type, txnType ?: "")
 
 		when (txnType) {
 			TxnModes.MANUAL.name -> PLog.i(TAG, "Use NumberPadFragment with extra_device=Manual")

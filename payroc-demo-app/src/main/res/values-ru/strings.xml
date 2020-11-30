@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">SDK Demo</string>
+    <string name="navigation_drawer_open">Открыть панель навигации</string>
+    <string name="navigation_drawer_close">Закрыть панель навигации</string>
+    <string name="nav_header_title">Payroc Development</string>
+    <string name="nav_header_subtitle" translatable="false">development@payroc.com</string>
+    <string name="nav_header_desc">Заголовок навигации</string>
+    <string name="action_settings">Настройки</string>
+    <string name="email_support">Написать в поддержку</string>
+    <string name="call_support">Позвонить в поддержку</string>
+
+    <!-- Строки связанные с логином -->
+    <string name="title_activity_login">Войти</string>
+    <string name="prompt_email">Электронная почта</string>
+    <string name="prompt_password">Пароль</string>
+    <string name="action_sign_in">Войдите или зарегистрируйтесь</string>
+    <string name="action_sign_in_short">Войти</string>
+    <string name="permission_rationale">"Разрешения контактов необходимы для заполнения электронной почты."</string>
+
+    <string name="nuke_stored_settings">Очистить настройки</string>
+    <string name="payment_processing">Процесс оплаты</string>
+    <string name="manual_pay">Ручная оплата</string>
+    <string name="partial_pay">Частичная оплата</string>
+    <string name="emv_contactless">EMV / Бесконтактная оплата</string>
+    <string name="extras">Дополнительно</string>
+    <string name="settings_page_tools">Инструменты</string>
+    <string name="ingest_transaction">Принять транзакцию</string>
+    <string name="multi_line_transaction">Многострочная транзакция</string>
+    <string name="transaction_history">История транзакций</string>
+    <string name="nav_inventory_transaction">Инвентарная транзакция</string>
+    <string name="nav_permissions">Разрешения</string>
+    <string name="enable_transaction">Включить транзакции</string>
+    <string name="enable_history">Включить историю</string>
+    <string name="enable_resending_receipts">Включить повторную отправку чеков</string>
+    <string name="enable_refund">Включить возврат транзакций</string>
+    <string name="enable_void">Включить отмену транзакций</string>
+    <string name="txn_type">%s Транзакция</string>
+
+    <string name="api_username">API Имя пользователя</string>
+    <string name="api_password">API Пароль</string>
+    <string name="api_key">API Ключ</string>
+    <string name="signature_test">Проверка подписи</string>
+    <string name="email_test">Проверка отправки почты</string>
+    <string name="tip_test">Проверка Чаевых</string>
+    <string name="transaction_review_test">Обзор транзакции</string>
+    <string name="pay_view">Экран оплаты</string>
+    <string name="main_activity_title">Payroc SDK Demo App</string>
+    <string name="gateway_id">ID Шлюза</string>
+    <string name="status_view_test">Статус транзакции</string>
+    <string name="transaction_status">Статус транзакции</string>
+    <string name="capture_all">Закрыть день</string>
+    <string name="time_out">Превышено время ожидания</string>
+
+    <string name="enable_background_anim">Разрешить фоновую анимацию</string>
+    <string name="module_tests">Тестирование модулей</string>
+    <string name="txn_types">Типы транзакций</string>
+</resources>
